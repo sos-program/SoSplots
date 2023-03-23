@@ -22,3 +22,7 @@ a string representing the status color in hex format
 \description{
 Generate a color value from a status or status confidence value
 }
+\examples{
+status_color('Red')
+status_color('Red', withAlpha = FALSE)
+}

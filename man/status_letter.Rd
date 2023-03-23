@@ -8,12 +8,17 @@ status_letter(status)
 }
 \arguments{
 \item{status}{a character string that gives the status or status confidence;
-valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red', 'DD'
+valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red'
 valid status confidence options are 'High', 'Moderate', 'Low'}
 }
 \value{
-a string containing one or more letters representing the status or status confidence
+a string containing one or more letters representing the status or status confidence,
+         or '' if the input is not a valid status
 }
 \description{
 Generate a letter from a status color for use as an abbreviated description of the status
+}
+\examples{
+status_letter('Green')
+status_letter(NA)
 }

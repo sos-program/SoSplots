@@ -17,6 +17,9 @@
 #' @param alpha  optional, and integer between 0 and 1, specifies the alpha channel (i.e., transparency) value
 #' @param withAlpha boolean; if TRUE, color strings will include an alpha channel - note that this may not be supported on all devices
 #' @returns a string representing the status color in hex format
+#' @examples
+#' status_color('Red')
+#' status_color('Red', withAlpha = FALSE)
 #' @export
 status_color <- function(status, alpha = 1, withAlpha = T) {
   if (!withAlpha) alpha <- NULL
@@ -39,6 +42,9 @@ status_color <- function(status, alpha = 1, withAlpha = T) {
 #'                valid status confidence options are 'High', 'Moderate', 'Low'
 #'                a default color is returned for unrecognized status values
 #' @returns a string representing the status color in hex format
+#' @examples
+#' status_color('Red', withAlpha = FALSE)
+#' bg_status_color('Red')
 #' @export
 bg_status_color <- function(status) {
 # (note - using no-alpha approximation here, since alpha channel doesn't render on some devices)
@@ -61,9 +67,13 @@ bg_status_color <- function(status) {
 
 #' Generate a letter from a status color for use as an abbreviated description of the status
 #' @param status  a character string that gives the status or status confidence;
-#'                valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red', 'DD'
+#'                valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red'
 #'                valid status confidence options are 'High', 'Moderate', 'Low'
-#' @returns a string containing one or more letters representing the status or status confidence
+#' @returns a string containing one or more letters representing the status or status confidence,
+#'          or '' if the input is not a valid status
+#' @examples
+#' status_letter('Green')
+#' status_letter(NA)
 #' @export
 status_letter <- function(status) {
   switch(status,

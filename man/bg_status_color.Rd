@@ -18,3 +18,7 @@ a string representing the status color in hex format
 \description{
 Generate a color value from a status color for shading plot background
 }
+\examples{
+status_color('Red', withAlpha = FALSE)
+bg_status_color('Red')
+}

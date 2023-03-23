@@ -6,11 +6,11 @@
 \usage{
 timeline_plot(
   data,
-  metrics = timelineMetrics.default,
+  metrics = timelineMetrics.default(),
   title = "Metrics & Status",
   startYr = NULL,
   endYr = NULL,
-  gpar = timelinePlotSpecs.default
+  gpar = NULL
 )
 }
 \arguments{
@@ -23,7 +23,8 @@ If a font attribute is provided, it overrides the default font.
 Font options are 'plain' (the default), 'bold', 'italic', 'bold italic'.
 Note: the font set here is used to select one of the fonts set via par('font'),
 following the convention that font #1 corresponds to plain text, font #2 to bold etc.
-See par documentation for details. Font can also be specified more directly by giving the numeric index.}
+See par documentation for details. Font can also be specified more directly by giving the numeric index.
+See \link{timelineMetrics.default} for more details on how to specify what metrics should be shown.}
 
 \item{title}{the plot title (optional)}
 
@@ -31,11 +32,26 @@ See par documentation for details. Font can also be specified more directly by g
 
 \item{endYr}{optional: if provided the final year to show in the timeline}
 
-\item{gpar}{plot styling}
+\item{gpar}{plot styling - see timelinePlotSpecs.default() for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
 Plot a set of time series using a series of squares, with letters and colouring indicating status (or confidence in status)
+}
+\examples{
+# show all metrics
+timeline_plot(Bowron_metrics)
+metrics <- list(
+  list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),
+  list(label = "ConfRating", dataCol = "RapidStatus.Confidence"),
+  list(label = "IntStatus", dataCol = "IntStatusRaw.Status", font = 'bold')
+)
+# only show Rapid and Integrated Status
+timeline_plot(Bowron_metrics, metrics = metrics)
+}
+\seealso{
+\code{\link{timelineMetrics.default}}
+\code{\link{timelinePlotSpecs.default}}
 }

@@ -27,45 +27,131 @@ outline_color <- function(status, alpha = 1) {
 # status colors for drawing fill of cells in timeline plot
 fill_color <- function(status) { status_color(status, withAlpha = F) }
 
-# plot specs for metric plot
-metricPlotSpecs.default <- list(main = list(cex.lab=1.2),                            # args passed to call to plot
-                                x.axis = list(cex.axis=1.3),                         # x axis styling
-                                y.axis = list(cex.axis=1.3),                         # y axis styling
-                                hline = list(lty=2, cex=1.2, col='darkgrey'),        # styling for horizontal reference lines
-                                hline.text = list(cex=1.2),                          # text styling for labels for horizontal ref lines
-                                vline = list(lwd=2, lty=2, col='darkgrey'),          # styling for vertical reference lines
-                                metric = list(type="o", col='darkblue', pch=19),     # styling for the metric time series line
-                                av = list(type="l", col="red"),                      # styling for the moving generational average line
-                                dom = list(type="p", col='darkblue', pch=21, bg='red', cex=1.3), # styling for dominant cycle year
-                                title = list(cex=1.5, col.main='darkblue'))          # styling for the plot title
 
-# plot specs for timeline plot
-timelinePlotSpecs.default <- list(main = list(asp=1),                            # overall plot layout
-                                  x.axis = list(cex.axis=1.5),                   # x axis styling
-                                  title = list(font=2, col='darkblue', cex=1.5), # plot title styling
-                                  label = list(cex=1.3, col='darkblue'),         # styling for metric series labels
-                                  metric.text = list(col='darkblue', cex=1.5),   # styling for metric letter
-                                  metric.line = list(col='darkgrey'))            # styling for metric square
+#' Default plot specs for use with metric_plot
+#'
+#' This data structure provides the default gpar settings for the \link{metric_plot} function.
+#' An equivalent data structure with additional values can be provided to metric_plot
+#' via the gpar parameter to further customize the plot. Values provided via gpar will
+#' override the defaults set here.
+#' \describe{
+#'    \item{par}{Additional arguments to be passed to \link[graphics]{par}}
+#'    \item{main}{Additional arguments to be passed to \link[base]{plot}}
+#'    \item{x.axis}{Additional styling for the x-axis (passed to \link[graphics]{axis})}
+#'    \item{y.axis}{Additional styling for the y-axis (passed to \link[graphics]{axis})}
+#'    \item{hline}{Additional styling for horizontal reference lines (passed to \link[graphics]{abline})}
+#'    \item{hline.text}{Additional text styling for labels for the horizontal reference lines (passed to \link[graphics]{text})}
+#'    \item{vline}{Additional styling for vertical reference lines (passed to \link[graphics]{abline})}
+#'    \item{metric}{Additional styling for the metric time series (passed to \link[graphics]{lines})}
+#'    \item{av}{Additional styling for the moving average time series (passed to \link[graphics]{lines})}
+#'    \item{dom}{Additional styling for the dominant cycle time series (passed to \link[graphics]{lines})}
+#'    \item{title}{Additional styling for the plot title (passed to \link[graphics]{title})}
+#' }
+#' @examples
+#' #  Bowron spawning escapement
+#' esc <- Bowron_escapement$Escapement_Wild
+#' names(esc) <- as.character(Bowron_escapement$Year)
+#' # Plot of Bowron spawning escapement, plain black line
+#' metric_plot(esc, gpar = list(metric = list(col='black', type='l')))
+#' # RelAbd plot for Bowron, change line styles and colors for metric and moving average
+#' RelAbd_plot(esc, Bowron_attribs,
+#'   gpar = list(metric = list(col='black', type='l'), av = list(col='lightgrey')))
+#' @seealso
+#' \code{\link{metric_plot}}
+#' \code{\link{RelAbd_plot}}
+#' \code{\link{LogRelAbd_plot}}
+#' \code{\link{LogAbsAbd_plot}}
+#' \code{\link{LongTrend_plot}}
+#' \code{\link{PercChange_plot}}
+#' \code{\link{status_overview_plot}}
+#' @export
+metricPlotSpecs.default <- function() {
+  list(par = list(mar = c(5,5,4,2)),                        # args passed to call to par
+       main = list(cex.lab=1.2),                            # args passed to call to plot
+       x.axis = list(cex.axis=1.3),                         # x axis styling
+       y.axis = list(cex.axis=1.3),                         # y axis styling
+       hline = list(lty=2, cex=1.2, col='darkgrey'),        # styling for horizontal reference lines
+       hline.text = list(cex=1.2),                          # text styling for labels for horizontal ref lines
+       vline = list(lwd=2, lty=2, col='darkgrey'),          # styling for vertical reference lines
+       metric = list(type="o", col='darkblue', pch=19),     # styling for the metric time series line
+       av = list(type="l", col="red"),                      # styling for the moving generational average line
+       dom = list(type="p", col='darkblue', pch=21, bg='red', cex=1.3), # styling for dominant cycle year
+       title = list(cex=1.5, col.main='darkblue'))          # styling for the plot title
+}
 
-# the metrics to plot in the timeline plot
 
-# predefined here for use with the data frame returned by the Scanner's DataManager
-# i.e., for use with the data frame returned by dataMngr$get_metricSeries_for_CU(CU_id)
-timelineMetrics.default <- list(list(label = "RelAbd", dataCol = "RelLBM.Status"),
-                                list(label = "AbsAbd", dataCol = "AbsLBM.Status"),
-                                list(label = "LongTrend", dataCol = "LongTrend.Status"),
-                                list(label = "PercChange", dataCol = "PercChange.Status"),
-                                list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),
-                                list(label = "ConfRating", dataCol = "RapidStatus.Confidence"),
-                                list(label = "IntStatus", dataCol = "IntStatusRaw.Status"))
+#' Default plot specs for use with timeline_plot
+#'
+#' This data structure provides the default gpar settings for the \link{timeline_plot} function.
+#' An equivalent data structure with additional values can be provided to timeline_plot
+#' via the gpar parameter to further customize the plot. Values provided via gpar will
+#' override the defaults set here.
+#' \describe{
+#'  \item{par}{Additional arguments to be passed to \link[graphics]{par}}
+#'  \item{main}{Additional arguments to be passed to \link[base]{plot}}
+#'  \item{x.axis}{Additional styling for the x-axis (passed \link[graphics]{axis})}
+#'  \item{label}{Additional styling for the metric series labels (passed to \link[graphics]{text})}
+#'  \item{metric.text}{Additional text styling for the letters representing status values (passed to \link[graphics]{text})}
+#'  \item{metric.line}{Additional styling for the horizontal lines shown as the backdrop for each metric series (passed to \link[graphics]{abline})}
+#' }
+#' @examples
+#' timelinePlotSpecs.default()
+#' # show timeline plot with new title styled in red
+#' timeline_plot(Bowron_metrics, gpar=list(title=list(text='Bowron Status', col='red', cex=1.2)))
+#' @seealso
+#' \code{\link{timeline_plot}}
+#' \code{\link{status_overview_plot}}
+#' @export
+timelinePlotSpecs.default <- function(){
+  list(par = list(mar=c(2, 7, 5, 2)),                 # margins etc
+       main = list(asp=1),                            # passed to plot
+       x.axis = list(cex.axis=1.5),                   # x axis styling
+       title = list(font=2, col='darkblue', cex=1.5), # plot title styling
+       label = list(cex=1.3, col='darkblue'),         # styling for metric series labels
+       metric.text = list(col='darkblue', cex=1.5),   # styling for metric letter
+       metric.line = list(col='darkgrey'))            # styling for metric square
+}
+
+#' Metrics to plot in the timeline_plot
+#'
+#' This data structure is predefined here for use with the data frame returned by the Salmon Scanner's DataManager
+#' i.e., for use with the data frame returned by dataMngr$get_metricSeries_for_CU(CU_id).
+#' More generally, it should be a list with one entry per metric, where each entry should be a list containing
+#' a *label* and a *dataCol*, where *dataCol* is the name of the corresponding metric in the data frame
+#' passed as the *data* arg to timeline_plot
+#' @examples
+#' timelineMetrics.default()
+#' # only show Rapid and Integrated Status in timeline_plot, make status letters bold
+#' metrics <- list(
+#'   list(label = "RapidStatus", dataCol = "RapidStatus.Status", font = 'bold'),
+#'   list(label = "ConfRating", dataCol = "RapidStatus.Confidence"),
+#'   list(label = "IntStatus", dataCol = "IntStatusRaw.Status", font = 'bold')
+#' )
+#'
+#' timeline_plot(Bowron_metrics, metrics = metrics)
+#' @seealso
+#' \code{\link{timeline_plot}}
+#' \code{\link{status_overview_plot}}
+#' @export
+timelineMetrics.default <- function() {
+  list(list(label = "RelAbd", dataCol = "RelLBM.Status"),
+       list(label = "AbsAbd", dataCol = "AbsLBM.Status"),
+       list(label = "LongTrend", dataCol = "LongTrend.Status"),
+       list(label = "PercChange", dataCol = "PercChange.Status"),
+       list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),
+       list(label = "ConfRating", dataCol = "RapidStatus.Confidence"),
+       list(label = "IntStatus", dataCol = "IntStatusRaw.Status"))
+}
 
 #-----------  Metric Plots -------------------
 
-#' Generate a metric plot
+#' Custom Metric or Abundance Plot
+#'
+#' Generate a plot of a metric or abundance time series,
 #' with an optional running generational mean, color bands showing red, amber and green zones,
 #' and optional additional horizontal and vertical reference lines
 #' @param data the metric time series (a named vector, names should be years)
-#' @param bmZones a list with entries Red and Amber, specifying the maximum values for each color zone
+#' @param bmZones a list with entries Red and Amber, specifying the maximum values for the red and amber color zones respectively
 #' @param avGen   if provided, a running average spanning avGen years will be added to the plot
 #' @param domCycleYear first dominant cycle year; if set, indicates that CU should be treated as cyclic,
 #'                     which will result in values for dominant years being highlighted
@@ -82,9 +168,24 @@ timelineMetrics.default <- list(list(label = "RelAbd", dataCol = "RelLBM.Status"
 #' @param vRefLines a number or vector. If provided, draw a vertical line at the corresponding years in the graph
 #' @param gpar plot styling
 #' @return generates a plot on the current graphics device
+#' @examples
+#' # create a plot of Bowron spawning escapement
+#' esc <- Bowron_escapement$Escapement_Wild
+#' names(esc) <- as.character(Bowron_escapement$Year)
+#' metric_plot(esc)
+#' # add status bands for the RelAbd metric
+#' bmZones <- list(Red = Bowron_attribs$RelAbd_LBM, Amber = Bowron_attribs$RelAbd_UBM)
+#' metric_plot(esc, bmZones = bmZones)
+#' # add generational average
+#' metric_plot(esc, bmZones = bmZones, avGen = Bowron_attribs$AvGen)
+#' @seealso
+#' \code{\link{metricPlotSpecs.default}}
 #' @export
 metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL, hRefLines = NULL, xRange = NULL, yRange = NULL, xTickStep = NULL,
-                       useLog = FALSE, plotTitle = '', tsName = '', vRefLines = NULL, gpar = metricPlotSpecs.default) {
+                       useLog = FALSE, plotTitle = '', tsName = '', vRefLines = NULL, gpar = NULL) {
+
+  # add user-specified styling - allow override
+  gpar <- add_specs(metricPlotSpecs.default(), gpar)
 
   # if there is no data, create an empty plot pane and then bail
   if (length(data) == 0 || all(is.na(data))) {
@@ -93,7 +194,7 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
   }
 
   # set plot margins
-  graphics::par(mar = c(5,5,4,2))
+  do.call2(fun = graphics::par, args = list(mar = c(5,5,4,2)), override = gpar$par)
 
   # get the plot dimensions and axis specs
   if (!is.null(bmZones)) {
@@ -107,25 +208,25 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
   xRange <- pretty_range(xRange, as.numeric(names(data)), nearest = 5)
 
   # get the plot area set up - not actually plotting anything yet
-  do.plot(fun = graphics::plot,
+  do.call2(fun = graphics::plot,
           args = list(x=xRange, type="n", xlim=xRange, ylim=c(ymin, ymax)/yaxis$scale, bty="n", xlab="Year", ylab=yaxis$label, axes=FALSE),
           override = gpar$main)
 
   # add x axis to the plot
   if (!is.null(xTickStep))
-    args <- list(1, at=seq(xTickStep*ceiling(xRange[1]/xTickStep), xTickStep*floor(xRange[2]/xTickStep), by=xTickStep))
+    args <- list(side=1, at=seq(xTickStep*ceiling(xRange[1]/xTickStep), xTickStep*floor(xRange[2]/xTickStep), by=xTickStep))
   else
-    args <- list(1)
-  do.plot(fun = graphics::axis, args = args, override = gpar$x.axis)
+    args <- list(side=1)
+  do.call2(fun = graphics::axis, args = args, override = gpar$x.axis)
 
   # add y axis to the plot
   if (useLog) {
     yTicks <- log_ticks(ymax)
-    args <- list(2, at = yTicks, labels=names(yTicks))
+    args <- list(side=2, at = yTicks, labels=names(yTicks))
   }
   else
-    args <- list(2)
-  do.plot(fun = graphics::axis, args = args, override = gpar$y.axis)
+    args <- list(side=2)
+  do.call2(fun = graphics::axis, args = args, override = gpar$y.axis)
 
   # add shaded rectangular areas to plot background, corresponding to red, amber and green status zones
   if (!is.null(bmZones) && !is.na(bmZones$Red) && !is.na(bmZones$Amber)) {
@@ -143,122 +244,172 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
   # add horizontal reference lines to the plot
   for (lab in names(hRefLines)) {
     if (!is.na(hRefLines[[lab]])) {
-      do.plot(fun = graphics::abline, args = list(h = hRefLines[[lab]]),override = gpar$hline)
-      do.plot(fun = graphics::text, args = list(x=graphics::par("usr")[2], y=hRefLines[[lab]], labels=lab, font=1, adj=c(1,0), xpd=NA), override = gpar$hline.text)
+      ypos <- as_y(hRefLines[[lab]], useLog)/yaxis$scale
+      do.call2(fun = graphics::abline, args = list(h = ypos), override = gpar$hline)
+      do.call2(fun = graphics::text, args = list(x=graphics::par("usr")[2], y=ypos, labels=lab, font=1, adj=c(1,0), xpd=NA),
+               override = gpar$hline.text)
     }
   }
 
   # add vertical reference lines to the plot
-  for (i in 1:length(vRefLines)) {
-    if(!is.na(vRefLines[i]))
-      do.plot(fun = graphics::abline, args = list(v = vRefLines[i]), override = gpar$vline)
-  }
+  if (!is.null(vRefLines))
+    for (i in 1:length(vRefLines)) {
+      if(!is.na(vRefLines[i]))
+        do.call2(fun = graphics::abline, args = list(v = vRefLines[i]), override = gpar$vline)
+    }
 
   # add the metric time series to the plot
   yrs <- as.numeric(names(data))
   ts <- as_y(data, useLog)/yaxis$scale
-  do.plot(fun = graphics::lines, args = list(x = yrs, y = ts), override = gpar$metric)
+  do.call2(fun = graphics::lines, args = list(x = yrs, y = ts), override = gpar$metric)
 
   # add a running average
-  if (!is.null(avGen))
-    do.plot(fun = graphics::lines, args = list(x = yrs, y = running_mean(ts, as.numeric(avGen))), override = gpar$av)
+  if (!is.null(avGen)) {
+    do.call2(fun = graphics::lines, args = list(x = yrs, y = running_mean(ts, as.numeric(avGen))), override = gpar$av)
+  }
 
   # highlight dominant cycle years
   if (!is.null(domCycleYear)) {
     domYrs <- yrs[yrs %in% seq(domCycleYear, max(yrs), by = 4)]
-    do.plot(fun=graphics::lines, args=list(x=domYrs, y=as_y(data[as.character(domYrs)], useLog)/yaxis$scale), override=gpar$dom)
+    do.call2(fun=graphics::lines, args=list(x=domYrs, y=as_y(data[as.character(domYrs)], useLog)/yaxis$scale), override=gpar$dom)
   }
 
   # add plot title
-  do.plot(fun = graphics::title, args = list(main = plotTitle, line = 1), override = gpar$title)
+  do.call2(fun = graphics::title, args = list(main = plotTitle, line = 1), override = gpar$title)
 }
 
 
 #-----------  Relative Abundance Plot -------------------
 
-#' Generate a Relative Abundance Plot
-#' with color bands showing red, amber and green zones for the Relative Abundance metric
-#' @param data the Absolute Abundance time series (a named vector, names should be years)
-#' @param attribs a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+#' Plot of Relative Abundance
+#'
+#' Generate a plot of a time series interpreted as relative abundance,
+#' with color bands showing red, amber and green zones for the Relative Abundance metric.
+#' @param data the abundance time series (a named vector, names should be years)
+#' @param attribs a list with CU attributes RelAbd_LBM and RelAbd_UBM, the lower and upper benchmark respectively
 #'                if AvGen is provided, a running generational average will be added
 #'                if DomCycleYear is provided, values for dominant cycle years will be highlighted
 #' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
-#' @param gpar plot styling
+#' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' ts <- Bowron_escapement$Escapement_Wild
+#' names(ts) <- as.character(Bowron_escapement$Year)
+#' RelAbd_plot(ts, Bowron_attribs)
+#' @seealso
+#' \code{\link{LogRelAbd_plot}}
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{metric_plot}}
 #' @export
 #'
-RelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default) {
+RelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   domYr <- get_dom_cycle_yr(attribs)
   avGen <- NULL
   if(is.null(domYr)) avGen <- get_av_gen(attribs)
   metric_plot(data = data, bmZones = list(Red = attribs$RelAbd_LBM, Amber = attribs$RelAbd_UBM),
               avGen = avGen, domCycleYear = domYr,
               xRange = yrRange, yRange = c(0), xTickStep = 5,
-              plotTitle = 'Relative Abundance Metric', tsName = 'Wild Spn')
+              plotTitle = 'Relative Abundance Metric', tsName = 'Wild Spn', gpar = gpar)
 }
 
 #-----------  Relative Abundance Index Plot - log plot of full TS -------------------
 
-#' Generate a Relative Abundance Plot (log scale)
+#' Plot of Relative Abundance (log version)
+#'
+#' Generate a plot of a time series interpreted as relative abundance,
+#' with color bands showing red, amber and green zones for the Relative Abundance metric.
+#' Values are shown on a log scale.
+#'
 #' @param data the Absolute Abundance time series (a named vector, names should be years)
 #' @param attribs a list with CU attributes
 #'                if AvGen is provided, a running generational average will be added
 #'                if Cyclic is set and DomCycleYear is provided, values for dominant cycle years will be highlighted
 #' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
-#' @param gpar plot styling
+#' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' ts <- Bowron_escapement$Escapement_Wild
+#' names(ts) <- as.character(Bowron_escapement$Year)
+#' LogRelAbd_plot(ts, Bowron_attribs)
+#' @seealso
+#' \code{\link{RelAbd_plot}}
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{metric_plot}}
 #' @export
 #'
-LogRelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default) {
+LogRelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   # Note: no color bands here
   domYr <- get_dom_cycle_yr(attribs)
   avGen <- NULL
   if(is.null(domYr)) avGen <- get_av_gen(attribs)
   metric_plot(data = data, bmZones = NULL,
               avGen = avGen, domCycleYear = domYr,
-              xRange = yrRange, useLog = TRUE, plotTitle = 'Relative Index of Abundance (Log Scale)', tsName = 'Wild Spn')
+              xRange = yrRange, useLog = TRUE, plotTitle = 'Relative Index of Abundance (Log Scale)',
+              tsName = 'Wild Spn', gpar = gpar)
 }
 
 #-----------  Absolute Abundance Plot -------------------
 
-#' Generate an Absolute Abundance Plot (log scale)
-#' with color bands showing red, amber and green zones for the Absolute Abundance metric
+#' Plot of Absolute Abundance (log version)
+#'
+#' Generate a plot of a time series interpreted as absolute abundance,
+#' with color bands showing red, amber and green zones for the Absolute Abundance metric.
+#' Values are shown on a log scale.
+#'
 #' @param data the Absolute Abundance time series (a named vector, names should be years)
-#' @param attribs a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+#' @param attribs a list with CU attributes AbsAbd_LBM and AbsAbd_UBM, the lower and upper benchmark respectively
 #'                if AvGen is provided, a running generational average will be added
 #'                if DomCycleYear is provided, values for dominant cycle years will be highlighted
 #' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
-#' @param gpar plot styling
+#' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' ts <- Bowron_escapement$Escapement_Wild
+#' names(ts) <- as.character(Bowron_escapement$Year)
+#' LogAbsAbd_plot(ts, Bowron_attribs)
+#' @seealso
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{metric_plot}}
 #' @export
 #'
-LogAbsAbd_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default) {
+LogAbsAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   domYr <- get_dom_cycle_yr(attribs)
   avGen <- NULL
   if(is.null(domYr)) avGen <- get_av_gen(attribs)
   metric_plot(data = data, bmZones = list(Red = attribs$AbsAbd_LBM, Amber = attribs$AbsAbd_UBM),
               avGen = avGen, domCycleYear = domYr, hRefLines = NULL, xRange = yrRange,
-              useLog = TRUE, plotTitle = 'Absolute Abundance Metric (Log Scale)', tsName = 'Wild Spn', gpar = gpar)
+              useLog = TRUE, plotTitle = 'Absolute Abundance Metric (Log Scale)',
+              tsName = 'Wild Spn', gpar = gpar)
 }
 
 #-----------  Long-term Trend Plot -------------------
 
-#' Generate a Long-term Trend Plot
+#' Long-term Trend Plot
+#'
+#' Generate a plot of a time series interpreted as the LongTrend metric,
 #' with color bands showing red, amber and green zones, and reference lines
+#'
 #' @param data the long-term trend time series (a named vector, names should be years)
-#' @param attribs a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+#' @param attribs a list with CU attributes LongTrend_LBM and LongTrend_UBM, the lower and upper benchmark respectively
 #'                if AvGen is provided, a running generational average will be added
 #'                if DomCycleYear is provided, values for dominant cycle years will be highlighted
-#' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
+#' @param yrRange range of years to show on x axis, given as a list with optional entries min and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
-#' @param gpar plot styling
+#' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' ts <- Bowron_metrics$LongTrend
+#' names(ts) <- as.character(Bowron_metrics$Year)
+#' LongTrend_plot(ts, Bowron_attribs, yrRange = list(max=2025))
+#' @seealso
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{metric_plot}}
 #' @export
 #'
-LongTrend_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default) {
+LongTrend_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   hRefLines = list('3/4' = as.numeric(attribs$LongTrend_UBM),
                    'Half' = as.numeric(attribs$LongTrend_LBM),
                    'Same' = 1,
@@ -271,19 +422,27 @@ LongTrend_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs
 
 #-----------  Percent Change Plot -------------------
 
-#' Generate a Percent Change Plot
+#' Percent Change Plot
+#' Generate a plot of a time series interpreted as the PercChange metric,
 #' with color bands showing red, amber and green zones, and reference lines
 #' @param data the percent change time series (a named vector, names should be years)
-#' @param attribs a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+#' @param attribs a list with CU attributes PercChange_LBM and PercChange_UBM, the lower and upper benchmark respectively
 #'                if AvGen is provided, a running generational average will be added
 #'                if DomCycleYear is provided, values for dominant cycle years will be highlighted
 #' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
-#' @param gpar plot styling
+#' @param gpar plot styling - see \link{metricPlotSpecs.default} for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' ts <- Bowron_metrics$PercChange
+#' names(ts) <- as.character(Bowron_metrics$Year)
+#' PercChange_plot(ts, Bowron_attribs, yrRange = list(max=2025))
+#' @seealso
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{metric_plot}}
 #' @export
 #'
-PercChange_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default) {
+PercChange_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   hRefLines = list('Half' = -50, 'Same' = 0, 'Double' = 100)
   metric_plot(data = data, bmZones = list(Red = attribs$PercChange_LBM, Amber = attribs$PercChange_UBM),
               avGen = NULL, domCycleYear = NULL, hRefLines = hRefLines, xRange = yrRange, yRange = c(-55, 50),
@@ -302,18 +461,34 @@ PercChange_plot <- function(data, attribs, yrRange = NULL, gpar = metricPlotSpec
 #'                 Note: the font set here is used to select one of the fonts set via par('font'),
 #'                 following the convention that font #1 corresponds to plain text, font #2 to bold etc.
 #'                 See par documentation for details. Font can also be specified more directly by giving the numeric index.
+#'                 See \link{timelineMetrics.default} for more details on how to specify what metrics should be shown.
 #' @param title the plot title (optional)
 #' @param startYr optional: if provided, the first year to show in the timeline
 #' @param endYr optional: if provided the final year to show in the timeline
-#' @param gpar plot styling
+#' @param gpar plot styling - see timelinePlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
+#' @examples
+#' # show all metrics
+#' timeline_plot(Bowron_metrics)
+#' metrics <- list(
+#'   list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),
+#'   list(label = "ConfRating", dataCol = "RapidStatus.Confidence"),
+#'   list(label = "IntStatus", dataCol = "IntStatusRaw.Status", font = 'bold')
+#' )
+#' # only show Rapid and Integrated Status
+#' timeline_plot(Bowron_metrics, metrics = metrics)
+#' @seealso
+#' \code{\link{timelineMetrics.default}}
+#' \code{\link{timelinePlotSpecs.default}}
 #' @export
 #'
-timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metrics & Status", startYr = NULL, endYr = NULL, gpar = timelinePlotSpecs.default) {
+timeline_plot <- function(data, metrics = timelineMetrics.default(), title = "Metrics & Status", startYr = NULL, endYr = NULL, gpar = NULL) {
+
+  gpar <- add_specs(timelinePlotSpecs.default(), gpar)
 
   # plot setup
   stopifnot('Year' %in% names(data))
-  graphics::par(mar=c(2, 7, 5, 2)) # plot margins
+  do.call2(fun = graphics::par, args = list(mar = c(2, 7, 5, 2)), override = gpar$par)
 
   if (is.null(startYr))
     startYr <- min(as.numeric(data$Year))
@@ -322,18 +497,18 @@ timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metr
   # get the plot area set up - no plotting yet
   xlim <- c(startYr, endYr)
   ylim <- c(-length(metrics) - 0.3, 0)
-  do.plot(fun = graphics::plot,
+  do.call2(fun = graphics::plot,
           args = list(x = 1:5, y = 1:5, type = "n", xlim = xlim, ylim = ylim, xlab = "", ylab = "", axes = FALSE),
           override = gpar$main)
 
   # add x axis
-  do.plot(fun = graphics::axis,
-          args = list(3, at = pretty(data$Year), pos=0),
+  do.call2(fun = graphics::axis,
+          args = list(side = 3, at = pretty(data$Year), pos=0),
           override = gpar$x.axis)
 
   # add plot title
-  do.plot(fun = graphics::mtext,
-          args = list(title, side = 3, line = 3, xpd = NA),
+  do.call2(fun = graphics::mtext,
+          args = list(text = title, side = 3, line = 3, xpd = NA),
           override = gpar$title)
 
   # add the metrics
@@ -341,7 +516,7 @@ timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metr
     font <- get_font(metrics[[i]]$font)
     gpar$metric.text$font <- font
     # plot the time series label
-    do.plot(fun = graphics::text,
+    do.call2(fun = graphics::text,
             args = list(x=graphics::par("usr")[1], y=-i, labels=metrics[[i]]$label, adj=c(1), xpd=NA, font=font),
             override = gpar$label)
 
@@ -353,7 +528,12 @@ timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metr
 
 # ------------- multi-panel CU Metric Summary Pane ----------
 
-#' CU metrics summary pane
+#' CU Metrics Summary Pane
+#'
+#' Creates metrics summary pane for a single CU. By default,
+#' plots time series abundance, long-term trend, and percent-change metrics,
+#' plus a timeline of status values for the different metrics.
+#' The timeline of status values is optional and will be left out of timelineMetricSpecs is set to NULL.
 #' @param CUmetrics a data frame with CU metrics in columns; at a minimum, should contain a Year column
 #'                  plus the columns specified in timelineMetrics
 #' @param  CUts     a data frame with spawner abundance time series; at a minimum, should contain columns
@@ -368,8 +548,7 @@ timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metr
 #' @param metricStartYr optional: first year to show metrics for in timeline plot; also marked with a vertical reference line in the metric plots.
 #' @param metricEndYr optional: final year to show metrics for in the metric plots; use this for consistent styling. Has no effect on timeline plot.
 #' @param metricPlotSpecs optional:
-#'                        layout options for the metrics plots
-#'                        see metricPlotSpecs.default for details
+#'                        layout options for the metrics plots - see \link{metricPlotSpecs.default} for details
 #' @param timelineMetricSpecs optional:
 #'                            If NULL, no timeline metrics are plotted.
 #'                            If provided, timelineMetricSpecs should be a list of lists,
@@ -378,20 +557,29 @@ timeline_plot <- function(data, metrics = timelineMetrics.default, title = "Metr
 #'                            where dataCol is the name of the corresponding column in the CUmetrics data frame
 #'                            and label is the label to show on the plot
 #'                            the list may also contain a font attribute, which, if specified, overrides the default
-#'                            the predefined timelineMetrics.default structure contains the necessary definitions for working
+#'                            the predefined timelineMetrics.default() structure contains the necessary definitions for working
 #'                            with the data frame provided by the Scanner's DataManager module via get_metricSeries_for_CU(CU_id)
+#'                            See \link{timelineMetrics.default} for more details.
 #' @param timelinePlotSpecs optional:
-#'                        layout options for the timeline plots
-#'                        see timelinePlotSpecs.default for details
+#'                        layout options for the timeline plots - see \link{timelinePlotSpecs.default} for details
+#'
 #' @return generates a plot on the current graphics device
+#' @examples
+#' metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs)
+#' # again, but without timeline panel
+#' metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs, timelineMetricSpecs = NULL)
+#' @seealso
+#' \code{\link{metricPlotSpecs.default}}
+#' \code{\link{timelineMetrics.default}}
+#' \code{\link{timelinePlotSpecs.default}}
 #' @export
 #'
 metric_summary_pane <- function(CUmetrics, CUts, CUattribs,
                                 metricStartYr = NULL,
                                 metricEndYr = NULL,
-                                metricPlotSpecs = metricPlotSpecs.default,
-                                timelineMetricSpecs = timelineMetrics.default,
-                                timelinePlotSpecs = timelinePlotSpecs.default) {
+                                metricPlotSpecs = metricPlotSpecs.default(),
+                                timelineMetricSpecs = timelineMetrics.default(),
+                                timelinePlotSpecs = timelinePlotSpecs.default()) {
 
   if (is.null(metricEndYr)) metricEndYr <- 5*ceiling(max(as.numeric(CUmetrics$Year))/5)
   if (is.null(metricStartYr)) metricStartYr <- 5*floor(min(as.numeric(CUmetrics$Year))/5)

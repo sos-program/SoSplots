@@ -2,9 +2,7 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{metric_plot}
 \alias{metric_plot}
-\title{Generate a metric plot
-with an optional running generational mean, color bands showing red, amber and green zones,
-and optional additional horizontal and vertical reference lines}
+\title{Custom Metric or Abundance Plot}
 \usage{
 metric_plot(
   data,
@@ -19,13 +17,13 @@ metric_plot(
   plotTitle = "",
   tsName = "",
   vRefLines = NULL,
-  gpar = metricPlotSpecs.default
+  gpar = NULL
 )
 }
 \arguments{
 \item{data}{the metric time series (a named vector, names should be years)}
 
-\item{bmZones}{a list with entries Red and Amber, specifying the maximum values for each color zone}
+\item{bmZones}{a list with entries Red and Amber, specifying the maximum values for the red and amber color zones respectively}
 
 \item{avGen}{if provided, a running average spanning avGen years will be added to the plot}
 
@@ -57,7 +55,21 @@ this will override min and max values taken from the data}
 generates a plot on the current graphics device
 }
 \description{
-Generate a metric plot
+Generate a plot of a metric or abundance time series,
 with an optional running generational mean, color bands showing red, amber and green zones,
 and optional additional horizontal and vertical reference lines
+}
+\examples{
+# create a plot of Bowron spawning escapement
+esc <- Bowron_escapement$Escapement_Wild
+names(esc) <- as.character(Bowron_escapement$Year)
+metric_plot(esc)
+# add status bands for the RelAbd metric
+bmZones <- list(Red = Bowron_attribs$RelAbd_LBM, Amber = Bowron_attribs$RelAbd_UBM)
+metric_plot(esc, bmZones = bmZones)
+# add generational average
+metric_plot(esc, bmZones = bmZones, avGen = Bowron_attribs$AvGen)
+}
+\seealso{
+\code{\link{metricPlotSpecs.default}}
 }

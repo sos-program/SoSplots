@@ -2,7 +2,7 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{metric_summary_pane}
 \alias{metric_summary_pane}
-\title{CU metrics summary pane}
+\title{CU Metrics Summary Pane}
 \usage{
 metric_summary_pane(
   CUmetrics,
@@ -10,9 +10,9 @@ metric_summary_pane(
   CUattribs,
   metricStartYr = NULL,
   metricEndYr = NULL,
-  metricPlotSpecs = metricPlotSpecs.default,
-  timelineMetricSpecs = timelineMetrics.default,
-  timelinePlotSpecs = timelinePlotSpecs.default
+  metricPlotSpecs = metricPlotSpecs.default(),
+  timelineMetricSpecs = timelineMetrics.default(),
+  timelinePlotSpecs = timelinePlotSpecs.default()
 )
 }
 \arguments{
@@ -35,8 +35,7 @@ DataQualkIdx: 'AbsAbd' if the SpnForAbd_Wild time series has absolute abundance 
 \item{metricEndYr}{optional: final year to show metrics for in the metric plots; use this for consistent styling. Has no effect on timeline plot.}
 
 \item{metricPlotSpecs}{optional:
-layout options for the metrics plots
-see metricPlotSpecs.default for details}
+layout options for the metrics plots - see \link{metricPlotSpecs.default} for details}
 
 \item{timelineMetricSpecs}{optional:
 If NULL, no timeline metrics are plotted.
@@ -46,16 +45,29 @@ entries are specified as lists, containing a label and dataCol,
 where dataCol is the name of the corresponding column in the CUmetrics data frame
 and label is the label to show on the plot
 the list may also contain a font attribute, which, if specified, overrides the default
-the predefined timelineMetrics.default structure contains the necessary definitions for working
-with the data frame provided by the Scanner's DataManager module via get_metricSeries_for_CU(CU_id)}
+the predefined timelineMetrics.default() structure contains the necessary definitions for working
+with the data frame provided by the Scanner's DataManager module via get_metricSeries_for_CU(CU_id)
+See \link{timelineMetrics.default} for more details.}
 
 \item{timelinePlotSpecs}{optional:
-layout options for the timeline plots
-see timelinePlotSpecs.default for details}
+layout options for the timeline plots - see \link{timelinePlotSpecs.default} for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-CU metrics summary pane
+Creates metrics summary pane for a single CU. By default,
+plots time series abundance, long-term trend, and percent-change metrics,
+plus a timeline of status values for the different metrics.
+The timeline of status values is optional and will be left out of timelineMetricSpecs is set to NULL.
+}
+\examples{
+metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs)
+# again, but without timeline panel
+metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs, timelineMetricSpecs = NULL)
+}
+\seealso{
+\code{\link{metricPlotSpecs.default}}
+\code{\link{timelineMetrics.default}}
+\code{\link{timelinePlotSpecs.default}}
 }

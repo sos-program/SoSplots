@@ -2,12 +2,12 @@
 % Please edit documentation in R/Rapid_Status_panel.R
 \name{status_overview_plot}
 \alias{status_overview_plot}
-\title{Generate a stacked bar plot that shows the proportion of CUs with red vs amber vs green status over time}
+\title{Status Overview Pane}
 \usage{
 status_overview_plot(
   CUstatus,
   plotTitle = "All CUs in Rapid Status Scan",
-  gpar = statusOverviewSpecs.default
+  gpar = NULL
 )
 }
 \arguments{
@@ -16,11 +16,18 @@ row names of CUstatus will be used to indicate years and be plotted along the x 
 
 \item{plotTitle}{the plot title}
 
-\item{gpar}{plot styling}
+\item{gpar}{plot styling - see \link{statusOverviewSpecs.default} for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-Generate a stacked bar plot that shows the proportion of CUs with red vs amber vs green status over time
+Generate a stacked bar plot that shows the proportion of CUs with red vs amber vs green status over time.
+}
+\examples{
+# show status overview for Fraser CUs
+status_overview_plot(RapidStatus)
+# again, with modified title
+gpar <- list(main=list(main='Rapid Status for Fraser Sockeye CUs', cex.main=0.8))
+status_overview_plot(RapidStatus, gpar=gpar)
 }

@@ -2,7 +2,11 @@
 #  Author: Brigitte Dorner
 #  March 2023
 
-#' Run a graphics command with args and additional opts that may override args
+#' An extended version of do.call
+#'
+#' This version allows the user to specify a second set of args. If provided, the second set of args is added to the first set
+#' and will override elements in the first set of args with the same name. Useful for letting the user pass on additional arguments to library
+#' functions with lots of optional arguments.
 #'
 #' @param fun the function to call
 #' @param args a named list that specifies the arguments for the function by name
@@ -10,9 +14,21 @@
 #'                 the version in override will be used instead
 #'
 #' @return the response of the call to fun with the arguments specified
+#' @examples
+#' custom_plot <- function(x = 1:10, y = 1:10, additionalArgs = NULL) {
+#'   do.call2(plot, args=list(x=x, y=y, xlab='x label', ylab='y label'), override=additionalArgs)
+#' }
+#' # show the default version of the plot
+#' custom_plot()
+#' # show a customized version
+#' plotArgs <- list(main = 'A Custom Plot', xlab = 'new x label', ylab = 'new y label')
+#' custom_plot(additionalArgs = plotArgs)
+#'
+#' @seealso \code{\link[base]{do.call}}
+#'
 #' @export
 #'
-do.plot <- function(fun, args, override) {
+do.call2 <- function(fun, args, override) {
   if (is.null(override)) do.call(fun, args) else do.call(fun, utils::modifyList(args, override))
 }
 
@@ -70,6 +86,7 @@ pretty_range <- function(presetRange, dataRange, nearest = 1) {
 as_y <- function(vals, asLog) {
   vals <- as.numeric(vals)
   if (asLog) {
+    stopifnot(all(vals >= 0))
     vals[vals == 0] <- 0.9
     log(vals) }
   else
@@ -82,18 +99,18 @@ draw_square <- function(x, y, status, gpar) {
     # note: Gottfried draws the rectangles as points, but this causes issues with scaling across devices
     # drawing actual rectangles gives more control to ensure that the cells always fill the available space and don't overlap,
     # irrespective of the length and number of metric series
-    #do.plot(fun=graphics::points, args=list(x=x, y=y, pch=22, col=outline_color(status), bg=fill_color(status)), override=gpar$metric.square)
+    #do.call2(fun=graphics::points, args=list(x=x, y=y, pch=22, col=outline_color(status), bg=fill_color(status)), override=gpar$metric.square)
     d <- 0.49
-    do.plot(fun=graphics::rect,
+    do.call2(fun=graphics::rect,
             args=list(xleft=x-d, ybottom=y-d, xright=x+d, ytop=y+d, col=fill_color(status), border=outline_color(status)),
             override=NULL)
-    do.plot(fun=graphics::text, args=list(x, y, status_letter(status)), override=gpar$metric.text)
+    do.call2(fun=graphics::text, args=list(x, y, status_letter(status)), override=gpar$metric.text)
   }
 }
 
 # draw a row of status squares in a timeline plot
 draw_metric_row <- function(y, m, startYr, endYr, gpar) {
-  do.plot(fun=graphics::abline, args=list(h = y), gpar$metric.line)
+  do.call2(fun=graphics::abline, args=list(h = y), gpar$metric.line)
   for (yr in startYr:endYr) {
     myr <- as.character(yr)
     status <- ifelse(myr %in% names(m), as.character(m[myr]), NA)
@@ -119,4 +136,14 @@ get_ts <- function(m, ds) {
 
 # get proportion of values in v that match one of the elements in match
 get_proportion <- function(v, match) { sum(v %in% match)/length(v) }
+
+# add custom plot specs
+add_specs <- function(default, additional) {
+  if (is.null(additional)) return(default)
+  stopifnot(names(additional) %in% names(default))
+  specs <- default
+  for (s in names(additional))
+      specs[[s]] <- utils::modifyList(specs[[s]], additional[[s]])
+  specs
+}
 

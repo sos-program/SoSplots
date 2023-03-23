@@ -2,27 +2,35 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{LongTrend_plot}
 \alias{LongTrend_plot}
-\title{Generate a Long-term Trend Plot
-with color bands showing red, amber and green zones, and reference lines}
+\title{Long-term Trend Plot}
 \usage{
-LongTrend_plot(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default)
+LongTrend_plot(data, attribs, yrRange = NULL, gpar = NULL)
 }
 \arguments{
 \item{data}{the long-term trend time series (a named vector, names should be years)}
 
-\item{attribs}{a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+\item{attribs}{a list with CU attributes LongTrend_LBM and LongTrend_UBM, the lower and upper benchmark respectively
 if AvGen is provided, a running generational average will be added
 if DomCycleYear is provided, values for dominant cycle years will be highlighted}
 
-\item{yrRange}{range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
+\item{yrRange}{range of years to show on x axis, given as a list with optional entries min and/or max, i.e.
 yrRange = list(min=<start year>, max=<end year>)}
 
-\item{gpar}{plot styling}
+\item{gpar}{plot styling - see metricPlotSpecs.default() for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-Generate a Long-term Trend Plot
+Generate a plot of a time series interpreted as the LongTrend metric,
 with color bands showing red, amber and green zones, and reference lines
+}
+\examples{
+ts <- Bowron_metrics$LongTrend
+names(ts) <- as.character(Bowron_metrics$Year)
+LongTrend_plot(ts, Bowron_attribs, yrRange = list(max=2025))
+}
+\seealso{
+\code{\link{metricPlotSpecs.default}}
+\code{\link{metric_plot}}
 }

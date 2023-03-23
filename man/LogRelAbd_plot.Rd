@@ -2,9 +2,9 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{LogRelAbd_plot}
 \alias{LogRelAbd_plot}
-\title{Generate a Relative Abundance Plot (log scale)}
+\title{Plot of Relative Abundance (log version)}
 \usage{
-LogRelAbd_plot(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default)
+LogRelAbd_plot(data, attribs, yrRange = NULL, gpar = NULL)
 }
 \arguments{
 \item{data}{the Absolute Abundance time series (a named vector, names should be years)}
@@ -16,11 +16,23 @@ if Cyclic is set and DomCycleYear is provided, values for dominant cycle years w
 \item{yrRange}{range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 yrRange = list(min=<start year>, max=<end year>)}
 
-\item{gpar}{plot styling}
+\item{gpar}{plot styling - see metricPlotSpecs.default() for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-Generate a Relative Abundance Plot (log scale)
+Generate a plot of a time series interpreted as relative abundance,
+with color bands showing red, amber and green zones for the Relative Abundance metric.
+Values are shown on a log scale.
+}
+\examples{
+ts <- Bowron_escapement$Escapement_Wild
+names(ts) <- as.character(Bowron_escapement$Year)
+LogRelAbd_plot(ts, Bowron_attribs)
+}
+\seealso{
+\code{\link{RelAbd_plot}}
+\code{\link{metricPlotSpecs.default}}
+\code{\link{metric_plot}}
 }

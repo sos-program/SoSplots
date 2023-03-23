@@ -2,27 +2,36 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{LogAbsAbd_plot}
 \alias{LogAbsAbd_plot}
-\title{Generate an Absolute Abundance Plot (log scale)
-with color bands showing red, amber and green zones for the Absolute Abundance metric}
+\title{Plot of Absolute Abundance (log version)}
 \usage{
-LogAbsAbd_plot(data, attribs, yrRange = NULL, gpar = metricPlotSpecs.default)
+LogAbsAbd_plot(data, attribs, yrRange = NULL, gpar = NULL)
 }
 \arguments{
 \item{data}{the Absolute Abundance time series (a named vector, names should be years)}
 
-\item{attribs}{a list with CU attributes LBM and UBM, the lower and upper benchmark respectively
+\item{attribs}{a list with CU attributes AbsAbd_LBM and AbsAbd_UBM, the lower and upper benchmark respectively
 if AvGen is provided, a running generational average will be added
 if DomCycleYear is provided, values for dominant cycle years will be highlighted}
 
 \item{yrRange}{range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 yrRange = list(min=<start year>, max=<end year>)}
 
-\item{gpar}{plot styling}
+\item{gpar}{plot styling - see metricPlotSpecs.default() for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-Generate an Absolute Abundance Plot (log scale)
-with color bands showing red, amber and green zones for the Absolute Abundance metric
+Generate a plot of a time series interpreted as absolute abundance,
+with color bands showing red, amber and green zones for the Absolute Abundance metric.
+Values are shown on a log scale.
+}
+\examples{
+ts <- Bowron_escapement$Escapement_Wild
+names(ts) <- as.character(Bowron_escapement$Year)
+LogAbsAbd_plot(ts, Bowron_attribs)
+}
+\seealso{
+\code{\link{metricPlotSpecs.default}}
+\code{\link{metric_plot}}
 }
