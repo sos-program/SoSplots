@@ -1,3 +1,5 @@
+# This file contains documentation for the sample datasets included with the package
+
 #' Attributes for the Bowron CU
 #'#'
 #' @format ## `Bowron_metrics`

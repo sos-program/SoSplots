@@ -6,7 +6,7 @@
 
 require(graphics)
 require(stats)
-
+require(utils)
 # -------------- define some defaults -------------------------
 
 # status colors for drawing outline of cells in timeline plot
@@ -28,7 +28,7 @@ outline_color <- function(status, alpha = 1) {
 fill_color <- function(status) { status_color(status, withAlpha = F) }
 
 
-#' Default plot specs for use with metric_plot
+#' Default plot styling for use with metric_plot
 #'
 #' This data structure provides the default gpar settings for the \link{metric_plot} function.
 #' An equivalent data structure with additional values can be provided to metric_plot
@@ -80,7 +80,7 @@ metricPlotSpecs.default <- function() {
 }
 
 
-#' Default plot specs for use with timeline_plot
+#' Default plot styling for use with timeline_plot
 #'
 #' This data structure provides the default gpar settings for the \link{timeline_plot} function.
 #' An equivalent data structure with additional values can be provided to timeline_plot
@@ -116,9 +116,10 @@ timelinePlotSpecs.default <- function(){
 #'
 #' This data structure is predefined here for use with the data frame returned by the Salmon Scanner's DataManager
 #' i.e., for use with the data frame returned by dataMngr$get_metricSeries_for_CU(CU_id).
-#' More generally, it should be a list with one entry per metric, where each entry should be a list containing
+#' More generally, \link{timeline_plot} should be provided with a list with one entry per metric to be shown,
+#' where each entry should be a list containing
 #' a *label* and a *dataCol*, where *dataCol* is the name of the corresponding metric in the data frame
-#' passed as the *data* arg to timeline_plot
+#' passed as the *data* arg to \link{timeline_plot}
 #' @examples
 #' timelineMetrics.default()
 #' # only show Rapid and Integrated Status in timeline_plot, make status letters bold

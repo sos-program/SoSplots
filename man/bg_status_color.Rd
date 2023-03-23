@@ -2,7 +2,7 @@
 % Please edit documentation in R/setup.R
 \name{bg_status_color}
 \alias{bg_status_color}
-\title{Generate a color value from a status color for shading plot background}
+\title{Status Colors for Plot Backgrounds}
 \usage{
 bg_status_color(status)
 }
@@ -16,7 +16,7 @@ a default color is returned for unrecognized status values}
 a string representing the status color in hex format
 }
 \description{
-Generate a color value from a status color for shading plot background
+Generate a color value from a status color for shading plot background areas.
 }
 \examples{
 status_color('Red', withAlpha = FALSE)

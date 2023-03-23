@@ -2,7 +2,7 @@
 % Please edit documentation in R/setup.R
 \name{status_letter}
 \alias{status_letter}
-\title{Generate a letter from a status color for use as an abbreviated description of the status}
+\title{Status Letter Code}
 \usage{
 status_letter(status)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{timelinePlotSpecs.default}
 \alias{timelinePlotSpecs.default}
-\title{Default plot specs for use with timeline_plot}
+\title{Default plot styling for use with timeline_plot}
 \usage{
 timelinePlotSpecs.default()
 }

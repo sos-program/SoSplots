@@ -2,7 +2,7 @@
 % Please edit documentation in R/CU_summary_panel.R
 \name{metricPlotSpecs.default}
 \alias{metricPlotSpecs.default}
-\title{Default plot specs for use with metric_plot}
+\title{Default plot styling for use with metric_plot}
 \usage{
 metricPlotSpecs.default()
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/setup.R
 \name{status_color}
 \alias{status_color}
-\title{Generate a color value from a status or status confidence value}
+\title{Status Color}
 \usage{
 status_color(status, alpha = 1, withAlpha = T)
 }
@@ -20,7 +20,7 @@ a default color is returned for unrecognized status values}
 a string representing the status color in hex format
 }
 \description{
-Generate a color value from a status or status confidence value
+Generate a color value from a status or status confidence value.
 }
 \examples{
 status_color('Red')

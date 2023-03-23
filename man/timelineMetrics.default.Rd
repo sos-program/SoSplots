@@ -9,9 +9,10 @@ timelineMetrics.default()
 \description{
 This data structure is predefined here for use with the data frame returned by the Salmon Scanner's DataManager
 i.e., for use with the data frame returned by dataMngr$get_metricSeries_for_CU(CU_id).
-More generally, it should be a list with one entry per metric, where each entry should be a list containing
+More generally, \link{timeline_plot} should be provided with a list with one entry per metric to be shown,
+where each entry should be a list containing
 a *label* and a *dataCol*, where *dataCol* is the name of the corresponding metric in the data frame
-passed as the *data* arg to timeline_plot
+passed as the *data* arg to \link{timeline_plot}
 }
 \examples{
 timelineMetrics.default()

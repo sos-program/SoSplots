@@ -9,7 +9,9 @@
 
 # status colors borrowed from Michael Arbeider's color scheme for IF Coho RPA
 # via Gottfried Pestal
-#' Generate a color value from a status or status confidence value
+#' Status Color
+#'
+#' Generate a color value from a status or status confidence value.
 #' @param status  a character string that gives the status or status confidence;
 #'                valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red', 'DD'
 #'                valid status confidence options are 'High', 'Moderate', 'Low'
@@ -36,7 +38,9 @@ status_color <- function(status, alpha = 1, withAlpha = T) {
          grDevices::rgb(140, 140, 140, alpha=alpha, maxColorValue = 255))
 }
 
-#' Generate a color value from a status color for shading plot background
+#' Status Colors for Plot Backgrounds
+#'
+#' Generate a color value from a status color for shading plot background areas.
 #' @param status  a character string that gives the status or status confidence;
 #'                valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red', 'DD'
 #'                valid status confidence options are 'High', 'Moderate', 'Low'
@@ -65,6 +69,8 @@ bg_status_color <- function(status) {
 
 #----------------- letters to use as abbreviation for status and status confidence ------------
 
+#' Status Letter Code
+#'
 #' Generate a letter from a status color for use as an abbreviated description of the status
 #' @param status  a character string that gives the status or status confidence;
 #'                valid status options are 'Green', 'AmberGreen', 'Amber', 'AmberRed', 'Red'
