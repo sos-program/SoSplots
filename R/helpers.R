@@ -85,10 +85,11 @@ pretty_range <- function(presetRange, dataRange, nearest = 1) {
 # create y values, log-transformed if requested
 as_y <- function(vals, asLog) {
   vals <- as.numeric(vals)
+  valid.vals <- !is.na(vals)
   if (asLog) {
-    stopifnot(all(vals >= 0))
+    stopifnot(all(vals[valid.vals] >= 0))
     vals[vals == 0] <- 0.9
-    log(vals) }
+    vals[valid.vals] <- log(vals[valid.vals]) }
   else
     vals
 }
