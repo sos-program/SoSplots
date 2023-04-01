@@ -90,8 +90,7 @@ as_y <- function(vals, asLog) {
     stopifnot(all(vals[valid.vals] >= 0))
     vals[vals == 0] <- 0.9
     vals[valid.vals] <- log(vals[valid.vals]) }
-  else
-    vals
+  vals
 }
 
 # draw a single status square at (x, y) in a timeline plot
