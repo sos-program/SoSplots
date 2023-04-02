@@ -1,14 +1,19 @@
 Package: SoSplots
 Type: Package
-Title: What the Package Does (Title Case)
+Title: SoSplots: Custom Plots for the State of the Salmon Program
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: c(
+    person("Brigitte", "Dorner", email ="bdorner@driftwoodcove.ca", role = c("aut", "cre")),
+    person("Gottfried", "Pestal", email = "gottfried.pestal@solv.ca", role = c("aut")),
+    person("Bronwyn", "Macdonald", email = "Bronwyn.MacDonald@dfo-mpo.gc.ca", role = c("aut")),
+    person("State of the Salmon Team, Department of Fisheries and Oceans Canada", role = c("cph", "fnd")))
+Maintainer: Brigitte Dornr <bdorner@driftwoodcove.ca>
+Description: This package creates custom plots and plot summary panes for metrics and associated escapement time series
+    for salmon Conservation Units.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
+
