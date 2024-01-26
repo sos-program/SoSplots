@@ -3,10 +3,8 @@
 \docType{data}
 \name{Bowron_escapement}
 \alias{Bowron_escapement}
-\title{Escapement data for the Bowron CU
-#'}
+\title{Escapement data for the Bowron CU}
 \format{
-## `Bowron_escapement`
 A data frame with columns:
 \describe{
   \item{CU_ID}{ID}
@@ -19,6 +17,5 @@ Bowron_escapement
 }
 \description{
 Escapement data for the Bowron CU
-#'
 }
 \keyword{datasets}

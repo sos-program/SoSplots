@@ -27,6 +27,8 @@ override the defaults set here.
 }
 \examples{
 #  Bowron spawning escapement
+data('Bowron_escapement', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 esc <- Bowron_escapement$Escapement_Wild
 names(esc) <- as.character(Bowron_escapement$Year)
 # Plot of Bowron spawning escapement, plain black line

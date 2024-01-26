@@ -60,6 +60,8 @@ with an optional running generational mean, color bands showing red, amber and g
 and optional additional horizontal and vertical reference lines
 }
 \examples{
+data('Bowron_escapement', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 # create a plot of Bowron spawning escapement
 esc <- Bowron_escapement$Escapement_Wild
 names(esc) <- as.character(Bowron_escapement$Year)

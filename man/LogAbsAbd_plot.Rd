@@ -27,6 +27,8 @@ with color bands showing red, amber and green zones for the Absolute Abundance m
 Values are shown on a log scale.
 }
 \examples{
+data('Bowron_escapement', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_escapement$Escapement_Wild
 names(ts) <- as.character(Bowron_escapement$Year)
 LogAbsAbd_plot(ts, Bowron_attribs)

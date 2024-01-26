@@ -26,6 +26,9 @@ Generate a plot of a time series interpreted as relative abundance,
 with color bands showing red, amber and green zones for the Relative Abundance metric.
 }
 \examples{
+library(SoSplots)
+data('Bowron_escapement', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_escapement$Escapement_Wild
 names(ts) <- as.character(Bowron_escapement$Year)
 RelAbd_plot(ts, Bowron_attribs)

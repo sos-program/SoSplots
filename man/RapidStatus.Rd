@@ -3,18 +3,14 @@
 \docType{data}
 \name{RapidStatus}
 \alias{RapidStatus}
-\title{Rapid Status Summary for Fraser Sockeye
-#'
-A data frame with CUs (identified by their CU_ID) in columns and assessment years in rows}
+\title{Rapid Status Summary for Fraser Sockeye}
 \format{
-An object of class \code{data.frame} with 25 rows and 22 columns.
+A data frame with CUs (identified by their CU_ID) in columns and assessment years in rows
 }
 \usage{
 RapidStatus
 }
 \description{
 Rapid Status Summary for Fraser Sockeye
-#'
-A data frame with CUs (identified by their CU_ID) in columns and assessment years in rows
 }
 \keyword{datasets}

@@ -42,6 +42,7 @@ Plot a set of time series using a series of squares, with letters and colouring 
 }
 \examples{
 # show all metrics
+data('Bowron_metrics', package='SoSplots')
 timeline_plot(Bowron_metrics)
 metrics <- list(
   list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),

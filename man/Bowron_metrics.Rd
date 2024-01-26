@@ -3,10 +3,8 @@
 \docType{data}
 \name{Bowron_metrics}
 \alias{Bowron_metrics}
-\title{Metrics for the Bowron CU
-#'}
+\title{Metrics for the Bowron CU}
 \format{
-## `Bowron_metrics`
 A data frame with columns:
 \describe{
   \item{CU_ID}{ID}
@@ -41,6 +39,5 @@ Bowron_metrics
 }
 \description{
 Metrics for the Bowron CU
-#'
 }
 \keyword{datasets}

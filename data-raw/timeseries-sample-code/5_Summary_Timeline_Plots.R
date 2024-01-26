@@ -9,12 +9,12 @@ library(plotrix)
 
 
 
-cu.info <- read_csv("data/MAIN_CU_LOOKUP_FOR_SOS.csv") %>%
+cu.info <- read_csv("data-raw/timeseries-sample-code/data/MAIN_CU_LOOKUP_FOR_SOS.csv") %>%
   dplyr::mutate(CU_ID = gsub("_","-",CU_ID))
 
-retro.summary.tbl <- read_csv("data/Retro_Synoptic_Details.csv")
+retro.summary.tbl <- read_csv("data-raw/timeseries-sample-code/data/Retro_Synoptic_Details.csv")
 
-plot.specs <- read_csv("data/TimelinePlot_Specs.csv")
+plot.specs <- read_csv("data-raw/timeseries-sample-code/data/TimelinePlot_Specs.csv")
 plot.specs
 #view(plot.specs)
 

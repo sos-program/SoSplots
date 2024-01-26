@@ -29,6 +29,8 @@ Generate a plot of a time series interpreted as the PercChange metric,
 with color bands showing red, amber and green zones, and reference lines
 }
 \examples{
+data('Bowron_metrics', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_metrics$PercChange
 names(ts) <- as.character(Bowron_metrics$Year)
 PercChange_plot(ts, Bowron_attribs, yrRange = list(max=2025))

@@ -1,8 +1,7 @@
 # This file contains documentation for the sample datasets included with the package
 
 #' Attributes for the Bowron CU
-#'#'
-#' @format ## `Bowron_metrics`
+#' @format
 #' A named vector with elements:
 #' \describe{
 #'   \item{CU_ID}{ID}
@@ -22,10 +21,8 @@
 #' }
 "Bowron_attribs"
 
-
 #' Metrics for the Bowron CU
-#'#'
-#' @format ## `Bowron_metrics`
+#' @format
 #' A data frame with columns:
 #' \describe{
 #'   \item{CU_ID}{ID}
@@ -57,8 +54,7 @@
 "Bowron_metrics"
 
 #' Escapement data for the Bowron CU
-#'#'
-#' @format ## `Bowron_escapement`
+#' @format
 #' A data frame with columns:
 #' \describe{
 #'   \item{CU_ID}{ID}
@@ -68,9 +64,17 @@
 "Bowron_escapement"
 
 #' Rapid Status Summary for Fraser Sockeye
-#'#'
+#' @format
 #'A data frame with CUs (identified by their CU_ID) in columns and assessment years in rows
-#'
 "RapidStatus"
 
+#' Groups for Fraser sockeye CUs
+#' @format
+#'A list of lists that specifies group membership for Fraser sockeye CUs
+"Fraser_sockeye_groups"
+
+#' Labels for sockeye CUs
+#' @format
+#'A list that specifies labels for sockeye CU IDs
+"sockeye_labels"
 

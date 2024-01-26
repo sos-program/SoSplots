@@ -49,6 +49,8 @@ fill_color <- function(status) { status_color(status, withAlpha = F) }
 #' }
 #' @examples
 #' #  Bowron spawning escapement
+#' data('Bowron_escapement', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' esc <- Bowron_escapement$Escapement_Wild
 #' names(esc) <- as.character(Bowron_escapement$Year)
 #' # Plot of Bowron spawning escapement, plain black line
@@ -95,6 +97,7 @@ metricPlotSpecs.default <- function() {
 #'  \item{metric.line}{Additional styling for the horizontal lines shown as the backdrop for each metric series (passed to \link[graphics]{abline})}
 #' }
 #' @examples
+#' data('Bowron_metrics', package='SoSplots')
 #' timelinePlotSpecs.default()
 #' # show timeline plot with new title styled in red
 #' timeline_plot(Bowron_metrics, gpar=list(title=list(text='Bowron Status', col='red', cex=1.2)))
@@ -121,6 +124,8 @@ timelinePlotSpecs.default <- function(){
 #' a *label* and a *dataCol*, where *dataCol* is the name of the corresponding metric in the data frame
 #' passed as the *data* arg to \link{timeline_plot}
 #' @examples
+#' data('RapidStatus', package='SoSplots')
+#' data('Bowron_metrics', package='SoSplots')
 #' timelineMetrics.default()
 #' # only show Rapid and Integrated Status in timeline_plot, make status letters bold
 #' metrics <- list(
@@ -170,6 +175,8 @@ timelineMetrics.default <- function() {
 #' @param gpar plot styling
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_escapement', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' # create a plot of Bowron spawning escapement
 #' esc <- Bowron_escapement$Escapement_Wild
 #' names(esc) <- as.character(Bowron_escapement$Year)
@@ -295,6 +302,9 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
 #' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
 #' @examples
+#' library(SoSplots)
+#' data('Bowron_escapement', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' ts <- Bowron_escapement$Escapement_Wild
 #' names(ts) <- as.character(Bowron_escapement$Year)
 #' RelAbd_plot(ts, Bowron_attribs)
@@ -331,6 +341,8 @@ RelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
 #' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_escapement', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' ts <- Bowron_escapement$Escapement_Wild
 #' names(ts) <- as.character(Bowron_escapement$Year)
 #' LogRelAbd_plot(ts, Bowron_attribs)
@@ -368,6 +380,8 @@ LogRelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
 #' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_escapement', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' ts <- Bowron_escapement$Escapement_Wild
 #' names(ts) <- as.character(Bowron_escapement$Year)
 #' LogAbsAbd_plot(ts, Bowron_attribs)
@@ -402,6 +416,8 @@ LogAbsAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
 #' @param gpar plot styling - see metricPlotSpecs.default() for details
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_metrics', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' ts <- Bowron_metrics$LongTrend
 #' names(ts) <- as.character(Bowron_metrics$Year)
 #' LongTrend_plot(ts, Bowron_attribs, yrRange = list(max=2025))
@@ -435,6 +451,8 @@ LongTrend_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
 #' @param gpar plot styling - see \link{metricPlotSpecs.default} for details
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_metrics', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
 #' ts <- Bowron_metrics$PercChange
 #' names(ts) <- as.character(Bowron_metrics$Year)
 #' PercChange_plot(ts, Bowron_attribs, yrRange = list(max=2025))
@@ -470,6 +488,7 @@ PercChange_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
 #' @return generates a plot on the current graphics device
 #' @examples
 #' # show all metrics
+#' data('Bowron_metrics', package='SoSplots')
 #' timeline_plot(Bowron_metrics)
 #' metrics <- list(
 #'   list(label = "RapidStatus" , dataCol = "RapidStatus.Status", font = 'bold'),
@@ -566,6 +585,9 @@ timeline_plot <- function(data, metrics = timelineMetrics.default(), title = "Me
 #'
 #' @return generates a plot on the current graphics device
 #' @examples
+#' data('Bowron_metrics', package='SoSplots')
+#' data('Bowron_attribs', package='SoSplots')
+#' data('Bowron_escapement', package='SoSplots')
 #' metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs)
 #' # again, but without timeline panel
 #' metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs, timelineMetricSpecs = NULL)

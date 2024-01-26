@@ -62,6 +62,9 @@ plus a timeline of status values for the different metrics.
 The timeline of status values is optional and will be left out of timelineMetricSpecs is set to NULL.
 }
 \examples{
+data('Bowron_metrics', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
+data('Bowron_escapement', package='SoSplots')
 metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs)
 # again, but without timeline panel
 metric_summary_pane(Bowron_metrics, Bowron_escapement, Bowron_attribs, timelineMetricSpecs = NULL)

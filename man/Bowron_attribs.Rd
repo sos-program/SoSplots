@@ -3,10 +3,8 @@
 \docType{data}
 \name{Bowron_attribs}
 \alias{Bowron_attribs}
-\title{Attributes for the Bowron CU
-#'}
+\title{Attributes for the Bowron CU}
 \format{
-## `Bowron_metrics`
 A named vector with elements:
 \describe{
   \item{CU_ID}{ID}
@@ -30,6 +28,5 @@ Bowron_attribs
 }
 \description{
 Attributes for the Bowron CU
-#'
 }
 \keyword{datasets}

@@ -26,6 +26,8 @@ Generate a plot of a time series interpreted as the LongTrend metric,
 with color bands showing red, amber and green zones, and reference lines
 }
 \examples{
+data('Bowron_metrics', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_metrics$LongTrend
 names(ts) <- as.character(Bowron_metrics$Year)
 LongTrend_plot(ts, Bowron_attribs, yrRange = list(max=2025))

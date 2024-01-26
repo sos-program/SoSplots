@@ -49,6 +49,7 @@ statusOverviewSpecs.default <- function(){
 #'
 #' @examples
 #' # show status overview for Fraser CUs
+#' data('RapidStatus', package='SoSplots')
 #' status_overview_plot(RapidStatus)
 #' # again, with modified title
 #' gpar <- list(main=list(main='Rapid Status for Fraser Sockeye CUs', cex.main=0.8))

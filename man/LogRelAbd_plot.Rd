@@ -27,6 +27,8 @@ with color bands showing red, amber and green zones for the Relative Abundance m
 Values are shown on a log scale.
 }
 \examples{
+data('Bowron_escapement', package='SoSplots')
+data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_escapement$Escapement_Wild
 names(ts) <- as.character(Bowron_escapement$Year)
 LogRelAbd_plot(ts, Bowron_attribs)

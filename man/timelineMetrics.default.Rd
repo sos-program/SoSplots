@@ -15,6 +15,8 @@ a *label* and a *dataCol*, where *dataCol* is the name of the corresponding metr
 passed as the *data* arg to \link{timeline_plot}
 }
 \examples{
+data('RapidStatus', package='SoSplots')
+data('Bowron_metrics', package='SoSplots')
 timelineMetrics.default()
 # only show Rapid and Integrated Status in timeline_plot, make status letters bold
 metrics <- list(

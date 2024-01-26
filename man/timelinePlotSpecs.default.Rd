@@ -21,6 +21,7 @@ override the defaults set here.
 }
 }
 \examples{
+data('Bowron_metrics', package='SoSplots')
 timelinePlotSpecs.default()
 # show timeline plot with new title styled in red
 timeline_plot(Bowron_metrics, gpar=list(title=list(text='Bowron Status', col='red', cex=1.2)))
