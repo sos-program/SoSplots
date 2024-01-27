@@ -34,7 +34,6 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 
   # plot setup
   do.call2(fun = graphics::par, args = list(mar = c(2, 7, 1, 2)), override = gpar$par)
-
   if (is.null(startYr))
     startYr <- min(as.numeric(row.names(data)))
   if (is.null(endYr))
@@ -69,17 +68,20 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
              args = list(x=graphics::par("usr")[1], y=-ypos, labels=grp, adj=c(0.5), xpd=NA, font=2),
              override = gpar$group_label)
     ypos <- ypos + 1
+
     for(CU_ID in groups[[grp]]) {
-      cat('making timeline for ', CU_ID, '...\n')
-      # plot the time series label
-      do.call2(fun = graphics::text,
-             args = list(x=graphics::par("usr")[1], y=-ypos, labels=labels[CU_ID], adj=c(1), xpd=NA, font=1),
-             override = gpar$label)
-      # draw the timeline
-      ts <- data[, CU_ID]
-      names(ts) <- row.names(data)
-      draw_metric_row(y=-ypos, m=ts,  startYr=xlim[1], endYr=xlim[2], gpar=gpar)
-      ypos <- ypos + 1
+      if (CU_ID %in% names(data)) { # allow for CUs missing from dataset
+        # plot the time series label
+        if (CU_ID %in% names(labels)) label<-labels[CU_ID] else label <- CU_ID
+        do.call2(fun = graphics::text,
+               args = list(x=graphics::par("usr")[1], y=-ypos, labels=label, adj=c(1), xpd=NA, font=1),
+               override = gpar$label)
+        # draw the timeline
+        ts <- data[, CU_ID]
+        names(ts) <- row.names(data)
+        draw_metric_row(y=-ypos, m=ts,  startYr=xlim[1], endYr=xlim[2], gpar=gpar)
+        ypos <- ypos + 1
+      }
     }
   }
 }
@@ -139,9 +141,3 @@ outline_color <- function(status, alpha = 1) {
 # status colors for drawing fill of cells in the timeline
 fill_color <- function(status) { status_color(status, withAlpha = F) }
 
-# # to generate datasets:
-# sockeye_labels <- CUattribs$CU_Acro
-# names(sockeye_labels) <- CUattribs$CU_ID
-# Fraser_sockeye_groups <- split(CUattribs[CUattribs$Region=='Fraser' & CUattribs$Species=='Sockeye', 'CU_ID'],
-#                                CUattribs[CUattribs$Region=='Fraser'  & CUattribs$Species=='Sockeye', 'Group'])
-# Fraser_sockeye_groups <- Fraser_sockeye_groups[c('SK-Fraser_Estu', 'SK-Fraser_Esum', 'SK-Fraser_Sum', 'SK-Fraser_Lat', 'SK-Fraser_RT')]
