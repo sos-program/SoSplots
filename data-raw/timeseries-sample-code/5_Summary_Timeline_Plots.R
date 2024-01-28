@@ -47,7 +47,7 @@ retro.yrs <- 1995:2020
 
 
 
-png(filename = paste0("data/TimelinePlot_",plot.do,".png"),
+png(filename = paste0("data-raw/timeseries-sample-code/output/TimelinePlot_",plot.do,".png"),
     width = 480*4, height = 480*5, units = "px", pointsize = 14*3.1, bg = "white",  res = NA)
 par(mai=c(0.3,6,3,1))
 
