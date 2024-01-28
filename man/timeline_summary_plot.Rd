@@ -2,10 +2,7 @@
 % Please edit documentation in R/Timeline_Summary_Panel.R
 \name{timeline_summary_plot}
 \alias{timeline_summary_plot}
-\title{Plot a summary of status time series for a set of CUs.
-Status series are represented by series of squares, with letters and colouring indicating status
-Each row in the block corresponds to a timeline for an individual CU.
-CUs are grouped into blocks, with horizontal spaces between blocks and group labels shown above each block.}
+\title{Plot a summary of status time series for a set of CUs}
 \usage{
 timeline_summary_plot(
   data,
@@ -36,15 +33,14 @@ list(group1 = c('CU_ID1', 'CU_ID2', ...), group2 = c('CU_ID5', 'CU_ID6', ...))}
 
 \item{endYr}{optional: if provided the final year to show in the timeline}
 
-\item{gpar}{plot styling - see timelineSummaryPlotSpecs.default() for details}
+\item{gpar}{plot styling - see \link{timelineSummaryPlotSpecs.default} for details}
 
-\item{gparSelected}{styling for selected CUs - see timelineSummaryPlotSpecsSelected.default() for details}
+\item{gparSelected}{styling for selected CUs - see \link{timelineSummaryPlotSpecsSelected.default} for details}
 }
 \value{
 generates a plot on the current graphics device
 }
 \description{
-Plot a summary of status time series for a set of CUs.
 Status series are represented by series of squares, with letters and colouring indicating status
 Each row in the block corresponds to a timeline for an individual CU.
 CUs are grouped into blocks, with horizontal spaces between blocks and group labels shown above each block.

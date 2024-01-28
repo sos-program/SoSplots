@@ -29,7 +29,7 @@ require(graphics)
 #' \code{\link{status_overview_plot}}
 #' @export
 statusOverviewSpecs.default <- function(){
-  list(main = list(mar = c(4,6,5,6)),
+  list(par = list(mar = c(4,6,5,6)),
        x.axis = list(cex.axis=1),
        y.axis = list(cex.axis=1),
        legend = list(cex=1.3),

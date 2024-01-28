@@ -2,7 +2,7 @@
 % Please edit documentation in R/Timeline_Summary_Panel.R
 \name{timelineSummaryPlotSpecsSelected.default}
 \alias{timelineSummaryPlotSpecsSelected.default}
-\title{Default plot styling for selected CUs, for use with timeline_summary_plot}
+\title{Default plot styling for selected CUs, for use with timeline_summary_plot()}
 \usage{
 timelineSummaryPlotSpecsSelected.default()
 }

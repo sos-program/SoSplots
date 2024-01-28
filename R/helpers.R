@@ -140,10 +140,14 @@ get_proportion <- function(v, match) { sum(v %in% match)/length(v) }
 # add custom plot specs
 add_specs <- function(default, additional) {
   if (is.null(additional)) return(default)
-  stopifnot(names(additional) %in% names(default))
   specs <- default
-  for (s in names(additional))
+  for (s in names(additional)) {
+    if (is.null(specs[[s]]))
+      specs[[s]] <- additional[[s]]
+    else
       specs[[s]] <- utils::modifyList(specs[[s]], additional[[s]])
+  }
   specs
 }
+
 

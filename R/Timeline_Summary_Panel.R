@@ -7,7 +7,8 @@ require(graphics)
 
 #-----------  Timeline Summary Plot -------------------
 
-#' Plot a summary of status time series for a set of CUs.
+#' Plot a summary of status time series for a set of CUs
+#'
 #' Status series are represented by series of squares, with letters and colouring indicating status
 #' Each row in the block corresponds to a timeline for an individual CU.
 #' CUs are grouped into blocks, with horizontal spaces between blocks and group labels shown above each block.
@@ -20,8 +21,8 @@ require(graphics)
 #' @param selectedCUs a list of IDs of the currently selected CUs (optional)
 #' @param startYr optional: if provided, the first year to show in the timeline
 #' @param endYr optional: if provided the final year to show in the timeline
-#' @param gpar plot styling - see timelineSummaryPlotSpecs.default() for details
-#' @param gparSelected styling for selected CUs - see timelineSummaryPlotSpecsSelected.default() for details
+#' @param gpar plot styling - see \link{timelineSummaryPlotSpecs.default} for details
+#' @param gparSelected styling for selected CUs - see \link{timelineSummaryPlotSpecsSelected.default} for details
 #' @return generates a plot on the current graphics device
 #' @examples
 #' data('RapidStatus', package='SoSplots')
@@ -129,7 +130,7 @@ timelineSummaryPlotSpecs.default <- function(){
        metric.line = list(col='darkgrey'))            # styling for status square
 }
 
-#' Default plot styling for selected CUs, for use with timeline_summary_plot
+#' Default plot styling for selected CUs, for use with timeline_summary_plot()
 #'
 #' This data structure provides the default gparSelected settings for the \link{timeline_summary_plot} function.
 #' An equivalent data structure can be provided to timeline_summary_plot via the gparSelect parameter to further customize the plot.
