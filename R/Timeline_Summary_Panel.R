@@ -17,9 +17,11 @@ require(graphics)
 #'               list(group1 = c('CU_ID1', 'CU_ID2', ...), group2 = c('CU_ID5', 'CU_ID6', ...))
 #' @param labels a named list with labels for the CU IDs
 #' @param title the plot title (optional)
+#' @param selectedCUs a list of IDs of the currently selected CUs (optional)
 #' @param startYr optional: if provided, the first year to show in the timeline
 #' @param endYr optional: if provided the final year to show in the timeline
 #' @param gpar plot styling - see timelineSummaryPlotSpecs.default() for details
+#' @param gparSelected styling for selected CUs - see timelineSummaryPlotSpecsSelected.default() for details
 #' @return generates a plot on the current graphics device
 #' @examples
 #' data('RapidStatus', package='SoSplots')
@@ -28,9 +30,11 @@ require(graphics)
 #' timeline_summary_plot(data=RapidStatus, group=Fraser_sockeye_groups, labels=sockeye_labels, title='Fraser Sockeye' )
 #' @export
 #'
-timeline_summary_plot <- function(data, groups, labels, title = "Status Summary", startYr = NULL, endYr = NULL, gpar = NULL) {
+timeline_summary_plot <- function(data, groups, labels, title = "Status Summary", selectedCUs = NULL, startYr = NULL, endYr = NULL, gpar = NULL, gparSelected = NULL) {
 
+  # override defaults with user-supplied plot specs if provided
   gpar <- add_specs(timelineSummaryPlotSpecs.default(), gpar)
+  gparSelected <- add_specs(timelineSummaryPlotSpecsSelected.default(), gparSelected)
 
   # plot setup
   do.call2(fun = graphics::par, args = list(mar = c(2, 7, 1, 2)), override = gpar$par)
@@ -43,7 +47,8 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 
   # calc ylim: we need one line for each CU, plus two lines above each group to fit the label:
   nrows <- length(unlist(groups)) + 2*length(groups)
-  ylim <- c(- nrows - 0.3, 0)
+  maxY <- max(46, nrows + 0.3) # 46 is from Gottfried's template; force plot to be at least that large
+  ylim <- c(- maxY, 0)
   do.call2(fun = graphics::plot,
            args = list(x = 1:5, y = 1:5, type = "n", xlim = xlim, ylim = ylim, xlab = "", ylab = "", axes = FALSE),
            override = gpar$main)
@@ -55,7 +60,7 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 
   # add plot title
   do.call2(fun = graphics::mtext,
-           args = list(text = title, side = 3, line = 1, xpd = NA),
+           args = list(text = title, side = 3, line = 2, xpd = NA),
            override = gpar$title)
 
   # add the status time series
@@ -71,15 +76,18 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 
     for(CU_ID in groups[[grp]]) {
       if (CU_ID %in% names(data)) { # allow for CUs missing from dataset
+        # for CUs that are currently selected, use special 'Selected' styling
+        if (CU_ID %in% selectedCUs) override <- gparSelected else override <- gpar
+
         # plot the time series label
         if (CU_ID %in% names(labels)) label<-labels[CU_ID] else label <- CU_ID
         do.call2(fun = graphics::text,
                args = list(x=graphics::par("usr")[1], y=-ypos, labels=label, adj=c(1), xpd=NA, font=1),
-               override = gpar$label)
+               override = override$label)
         # draw the timeline
         ts <- data[, CU_ID]
         names(ts) <- row.names(data)
-        draw_metric_row(y=-ypos, m=ts,  startYr=xlim[1], endYr=xlim[2], gpar=gpar)
+        draw_metric_row(y=-ypos, m=ts,  startYr=xlim[1], endYr=xlim[2], gpar=override)
         ypos <- ypos + 1
       }
     }
@@ -89,16 +97,16 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 #' Default plot styling for use with timeline_summary_plot
 #'
 #' This data structure provides the default gpar settings for the \link{timeline_summary_plot} function.
-#' An equivalent data structure with additional values can be provided to timeline_summary_plot
-#' via the gpar parameter to further customize the plot. Values provided via gpar will
-#' override the defaults set here.
+#' An equivalent data structure can be provided to timeline_summary_plot via the gpar parameter to further customize the plot.
+#' Values provided via the gpar parameter will override the defaults set here.
 #' \describe{
-#'  \item{par}{Additional arguments to be passed to \link[graphics]{par}}
-#'  \item{main}{Additional arguments to be passed to \link[base]{plot}}
-#'  \item{x.axis}{Additional styling for the x-axis (passed \link[graphics]{axis})}
-#'  \item{label}{Additional styling for the CU time series labels (passed to \link[graphics]{text})}
-#'  \item{status.text}{Additional text styling for the letters representing status values (passed to \link[graphics]{text})}
-#'  \item{status.line}{Additional styling for the horizontal lines shown as the backdrop for each status series (passed to \link[graphics]{abline})}
+#'  \item{par}{Arguments to be passed to \link[graphics]{par}}
+#'  \item{main}{Arguments to be passed to \link[base]{plot}}
+#'  \item{x.axis}{Styling for the x-axis (passed \link[graphics]{axis})}
+#'  \item{group_label}{Styling for the group labels (passed to \link[graphics]{text})}
+#'  \item{label}{Styling for the CU time series labels (passed to \link[graphics]{text})}
+#'  \item{status.text}{Styling for the letters representing status values (passed to \link[graphics]{text})}
+#'  \item{status.line}{Styling for the horizontal lines shown as the backdrop for each status series (passed to \link[graphics]{abline})}
 #' }
 #' @examples
 #' timelineSummaryPlotSpecs.default()
@@ -115,8 +123,28 @@ timelineSummaryPlotSpecs.default <- function(){
        main = list(asp=1),                            # passed to plot
        x.axis = list(cex.axis=1.4),                   # x axis styling
        title = list(font=2, col='darkblue', cex=1.5), # plot title styling
-       label = list(font=1, cex=1, col='black'),    # styling for CU time series labels
        group_label = list(font=2, cex=1.1, col='darkblue'), # styling for group labels
+       label = list(font=1, cex=1, col='black'),    # styling for CU time series labels
+       metric.text = list(font=1, col='darkblue', cex=1),   # styling for status letter
+       metric.line = list(col='darkgrey'))            # styling for status square
+}
+
+#' Default plot styling for selected CUs, for use with timeline_summary_plot
+#'
+#' This data structure provides the default gparSelected settings for the \link{timeline_summary_plot} function.
+#' An equivalent data structure can be provided to timeline_summary_plot via the gparSelect parameter to further customize the plot.
+#' Values provided via the gpar parameter will override the defaults set here.
+#' \describe{
+#'  \item{label}{Styling for the CU time series labels (passed to \link[graphics]{text})}
+#'  \item{status.text}{Styling for the letters representing status values (passed to \link[graphics]{text})}
+#'  \item{status.line}{Styling for the horizontal lines shown as the backdrop for each status series (passed to \link[graphics]{abline})}
+#' }
+#' @seealso
+#' \code{\link{timeline_summary_plot}}
+#' \code{\link{timelineSummaryPlotSpecs.default}}
+#' @export
+timelineSummaryPlotSpecsSelected.default <- function(){
+  list(label = list(font=2, cex=1, col='black'),    # styling for CU time series labels
        metric.text = list(font=2, col='darkblue', cex=1),   # styling for status letter
        metric.line = list(col='darkgrey'))            # styling for status square
 }
