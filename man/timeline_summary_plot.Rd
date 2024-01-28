@@ -12,9 +12,11 @@ timeline_summary_plot(
   groups,
   labels,
   title = "Status Summary",
+  selectedCUs = NULL,
   startYr = NULL,
   endYr = NULL,
-  gpar = NULL
+  gpar = NULL,
+  gparSelected = NULL
 )
 }
 \arguments{
@@ -28,11 +30,15 @@ list(group1 = c('CU_ID1', 'CU_ID2', ...), group2 = c('CU_ID5', 'CU_ID6', ...))}
 
 \item{title}{the plot title (optional)}
 
+\item{selectedCUs}{a list of IDs of the currently selected CUs (optional)}
+
 \item{startYr}{optional: if provided, the first year to show in the timeline}
 
 \item{endYr}{optional: if provided the final year to show in the timeline}
 
 \item{gpar}{plot styling - see timelineSummaryPlotSpecs.default() for details}
+
+\item{gparSelected}{styling for selected CUs - see timelineSummaryPlotSpecsSelected.default() for details}
 }
 \value{
 generates a plot on the current graphics device
