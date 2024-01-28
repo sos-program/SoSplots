@@ -1,7 +1,7 @@
 Package: SoSplots
 Type: Package
 Title: SoSplots: Custom Plots for the Department of Fisheries and Oceans State of the Salmon Program
-Version: 0.2.0
+Version: 0.3.0
 Author: c(
     person("Brigitte", "Dorner", email ="bdorner@driftwoodcove.ca", role = c("aut", "cre")),
     person("Gottfried", "Pestal", email = "gottfried.pestal@solv.ca", role = c("aut")),
