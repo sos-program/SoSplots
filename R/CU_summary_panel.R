@@ -253,9 +253,9 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
   for (lab in names(hRefLines)) {
     if (!is.na(hRefLines[[lab]])) {
       ypos <- as_y(hRefLines[[lab]], useLog)/yaxis$scale
-      do.call2(fun = graphics::abline, args = list(h = ypos), override = gpar$hline)
+      do.call2(fun = graphics::abline, args = list(h = ypos), override = get_style(gpar, 'hline', lab))
       do.call2(fun = graphics::text, args = list(x=graphics::par("usr")[2], y=ypos, labels=lab, font=1, adj=c(1,0), xpd=NA),
-               override = gpar$hline.text)
+               override = get_style(gpar, 'hline.text', lab))
     }
   }
 
@@ -297,6 +297,9 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
 #' @param attribs a list with CU attributes RelAbd_LBM and RelAbd_UBM, the lower and upper benchmark respectively
 #'                if AvGen is provided, a running generational average will be added
 #'                if DomCycleYear is provided, values for dominant cycle years will be highlighted
+#'                if AbdMetric is set to T, benchmark information will be shown as coloured zones
+#'                if AbdMetric is F, benchmarks will be shown as reference lines labeled 'Ref Only', to indicate
+#'                data quality is too low for formal status determination
 #' @param yrRange range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 #'                yrRange = list(min=<start year>, max=<end year>)
 #' @param gpar plot styling - see metricPlotSpecs.default() for details
@@ -308,6 +311,9 @@ metric_plot <- function(data, bmZones = NULL, avGen = NULL, domCycleYear = NULL,
 #' ts <- Bowron_escapement$Escapement_Wild
 #' names(ts) <- as.character(Bowron_escapement$Year)
 #' RelAbd_plot(ts, Bowron_attribs)
+#' # demonstrate plot styling for instances where metric data available, but quality too low for formal status determination
+#' Bowron_attribs$AbdMetric <- FALSE
+#' RelAbd_plot(ts, Bowron_attribs)
 #' @seealso
 #' \code{\link{LogRelAbd_plot}}
 #' \code{\link{metricPlotSpecs.default}}
@@ -318,10 +324,27 @@ RelAbd_plot <- function(data, attribs, yrRange = NULL, gpar = NULL) {
   domYr <- get_dom_cycle_yr(attribs)
   avGen <- NULL
   if(is.null(domYr)) avGen <- get_av_gen(attribs)
-  metric_plot(data = data, bmZones = list(Red = attribs$RelAbd_LBM, Amber = attribs$RelAbd_UBM),
-              avGen = avGen, domCycleYear = domYr,
-              xRange = yrRange, yRange = c(0), xTickStep = 5,
-              plotTitle = 'Relative Abundance Metric', tsName = 'Wild Spn', gpar = gpar)
+  if (attribs$AbdMetric)
+    metric_plot(data = data, bmZones = list(Red = attribs$RelAbd_LBM, Amber = attribs$RelAbd_UBM),
+                avGen = avGen, domCycleYear = domYr,
+                xRange = yrRange, yRange = c(0), xTickStep = 5,
+                plotTitle = 'Relative Abundance Metric', tsName = 'Wild Spn', gpar = gpar)
+  else {
+    # use horizontal reference lines to show RelAbd UBM and LBM if AbdMetric is set to F
+    # style these with appropriate colors etc
+    gpar$hline[['Upper \n(Ref Only)']] <- list(lty=2, cex=1.2, col=outline_color('Green'))
+    gpar$hline.text[['Upper \n(Ref Only)']] <- list(cex=1, col=outline_color('Green'), adj=c(0.2, 0.5))
+    gpar$hline[['Lower \n(Ref Only)']] <- list(lty=2, cex=1.2, col=outline_color('Red'))
+    gpar$hline.text[['Lower \n(Ref Only)']] <- list(cex=1, col=outline_color('Red'), adj=c(0.2, 0.5))
+    gpar$par$mar <- c(5,5,4,3) + 0.1
+    metric_plot(data = data, bmZones = NULL,
+                hRefLines = list('Upper \n(Ref Only)' = as.numeric(attribs$RelAbd_UBM),
+                                 'Lower \n(Ref Only)' = as.numeric(attribs$RelAbd_LBM)),
+                avGen = avGen, domCycleYear = domYr,
+                xRange = yrRange, yRange = c(0), xTickStep = 5,
+                plotTitle = 'Relative Abundance Metric', tsName = 'Wild Spn', gpar = gpar)
+  }
+
 }
 
 #-----------  Relative Abundance Index Plot - log plot of full TS -------------------

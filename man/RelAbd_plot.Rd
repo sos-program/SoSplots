@@ -11,7 +11,10 @@ RelAbd_plot(data, attribs, yrRange = NULL, gpar = NULL)
 
 \item{attribs}{a list with CU attributes RelAbd_LBM and RelAbd_UBM, the lower and upper benchmark respectively
 if AvGen is provided, a running generational average will be added
-if DomCycleYear is provided, values for dominant cycle years will be highlighted}
+if DomCycleYear is provided, values for dominant cycle years will be highlighted
+if AbdMetric is set to T, benchmark information will be shown as coloured zones
+if AbdMetric is F, benchmarks will be shown as reference lines labeled 'Ref Only', to indicate
+data quality is too low for formal status determination}
 
 \item{yrRange}{range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 yrRange = list(min=<start year>, max=<end year>)}
@@ -31,6 +34,9 @@ data('Bowron_escapement', package='SoSplots')
 data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_escapement$Escapement_Wild
 names(ts) <- as.character(Bowron_escapement$Year)
+RelAbd_plot(ts, Bowron_attribs)
+# demonstrate plot styling for instances where metric data available, but quality too low for formal status determination
+Bowron_attribs$AbdMetric <- FALSE
 RelAbd_plot(ts, Bowron_attribs)
 }
 \seealso{

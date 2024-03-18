@@ -64,6 +64,17 @@ get_av_gen <- function(attr) {
     NULL
 }
 
+# get a style from the list of style parameters; pull a list of generic style parameters
+# (e.g., gpar$hline), or pull the specific style for a named element (e.g., gpar$hline$ABS_LBM)
+get_style <- function(gpar, main, sub=NULL) {
+  style <- NULL
+  if (main %in% names(gpar)) {
+    style <- gpar[[main]]
+    if (sub %in% names(style)) style <- style[[sub]]
+  }
+  style
+}
+
 # create series of y-axis tickmarks for use in a log plot, based on largest value to be plotted
 log_ticks <- function(ymax) {
   ticks <- log(10^c(0:8))

@@ -11,7 +11,7 @@ A named vector with elements:
   \item{CU_Name}{Name}
   \item{AvGen}{Average Generation Length}
   \item{DataQualkIdx}{Describes the type of abundance data}
-  \item{Cyclic}{Cycling dominance}
+  \item{Cyclic}{Cyclic dominance}
   \item{Cyc_Dom_Year}{If the CU has cyclic dominance, first dominant cycle year in the abundance data}
   \item{RelAbd_LBM}{Lower benchmark for the RelAbd metric}
   \item{RelAbd_UBM}{Upper benchmark for the RelAbd metric}
@@ -21,6 +21,7 @@ A named vector with elements:
   \item{LongTrend_UBM}{Upper benchmark for the LongTrend metric}
   \item{PercChange_LBM}{Lower benchmark for the PercChange metric}
   \item{PercChange_UBM}{Upper benchmark for the PercChange metric}
+  \item{AbdMetric}{Boolean, specifies whether the CU has data of high-enough quality to inform status determination}
 }
 }
 \usage{
