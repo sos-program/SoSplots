@@ -49,5 +49,8 @@ CUs are grouped into blocks, with horizontal spaces between blocks and group lab
 data('RapidStatus', package='SoSplots')
 data('Fraser_sockeye_groups', package='SoSplots')
 data('sockeye_labels', package='SoSplots')
-timeline_summary_plot(data=RapidStatus, group=Fraser_sockeye_groups, labels=sockeye_labels, title='Fraser Sockeye' )
+timeline_summary_plot(data=RapidStatus,
+                      group=Fraser_sockeye_groups,
+                      labels=sockeye_labels,
+                      title="Fraser Sockeye" )
 }

@@ -26,7 +26,10 @@ timelineSummaryPlotSpecs.default()
 data('RapidStatus', package='SoSplots')
 data('Fraser_sockeye_groups', package='SoSplots')
 data('sockeye_labels', package='SoSplots')
-timeline_summary_plot(data=RapidStatus, group=Fraser_sockeye_groups, labels=sockeye_labels, gpar=list(title=list(text='Fraser Sockeye', col='red', cex=1.2)))
+timeline_summary_plot(data=RapidStatus,
+                      group=Fraser_sockeye_groups,
+                      labels=sockeye_labels,
+                      gpar=list(title=list(text='Fraser Sockeye', col='red', cex=1.2)))
 }
 \seealso{
 \code{\link{timeline_summary_plot}}

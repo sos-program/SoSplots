@@ -9,12 +9,7 @@ RelAbd_plot(data, attribs, yrRange = NULL, gpar = NULL)
 \arguments{
 \item{data}{the abundance time series (a named vector, names should be years)}
 
-\item{attribs}{a list with CU attributes RelAbd_LBM and RelAbd_UBM, the lower and upper benchmark respectively
-if AvGen is provided, a running generational average will be added
-if DomCycleYear is provided, values for dominant cycle years will be highlighted
-if AbdMetric is set to T, benchmark information will be shown as coloured zones
-if AbdMetric is F, benchmarks will be shown as reference lines labeled 'Ref Only', to indicate
-data quality is too low for formal status determination}
+\item{attribs}{a list (or named vector) with CU attributes. See *Details* below for more information.}
 
 \item{yrRange}{range of years to show on x axis, given as a list with optional entries ming and/or max, i.e.
 yrRange = list(min=<start year>, max=<end year>)}
@@ -28,6 +23,17 @@ generates a plot on the current graphics device
 Generate a plot of a time series interpreted as relative abundance,
 with color bands showing red, amber and green zones for the Relative Abundance metric.
 }
+\details{
+`attribs` would usually be a row from a table with CU attributes. At a minimum, it should contain entries for
+* `RelAbd_LBM` and `RelAbd_UBM`:  the lower and upper benchmark respectively,
+* `AvGen`: if not NA, a running generational average for the given generation length will be added.
+* `Cyclic`: a flag that indicates whether the CU is cyclic.
+* `DomCycleYear`: if `Cyclic` is set to `TRUE` and `DomCycleYear` is not NA and contains a valid year, dominant cycle years will be inferred from `DomCycleYear` and `AvGen`, and values for dominant cycle years will be highlighted in the plot.
+* `AbdMetric`: governs how benchmark information is displayed in the plot.
+If `AbdMetric` is set to `TRUE`, benchmark information will be shown as coloured zones.
+If `AbdMetric` is set to `FALSE`, benchmarks will be shown as reference lines labeled 'Ref Only', to indicate
+               data quality is too low for formal status determination.
+}
 \examples{
 library(SoSplots)
 data('Bowron_escapement', package='SoSplots')
@@ -35,7 +41,8 @@ data('Bowron_attribs', package='SoSplots')
 ts <- Bowron_escapement$Escapement_Wild
 names(ts) <- as.character(Bowron_escapement$Year)
 RelAbd_plot(ts, Bowron_attribs)
-# demonstrate plot styling for instances where metric data available, but quality too low for formal status determination
+# demonstrate plot styling for instances where metric data available,
+# but quality too low for formal status determination
 Bowron_attribs$AbdMetric <- FALSE
 RelAbd_plot(ts, Bowron_attribs)
 }

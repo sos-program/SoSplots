@@ -34,6 +34,7 @@
 #'   \item{AbsUBM}{AbsUBM metric}
 #'   \item{AbsUBM.Status}{CU status as measured by the AbsUBM metric}
 #'   \item{AbsUBM.Confidence}{Confidence in the AbsUBM status}
+#'   \item{RelLBM}{RelLBM metric}
 #'   \item{RelLBM.Status}{CU status as measured by the RelLBM metric}
 #'   \item{RelLBM.Confidence}{Confidence in the RelLBM status}
 #'   \item{AbsLBM}{AbsLBM metric}
@@ -47,10 +48,11 @@
 #'   \item{PercChange.Confidence}{Confidence in the PercChange status}
 #'   \item{IntStatus.Status}{Status determined by Integrated Status Assessment}
 #'   \item{IntStatus.Confidence}{Confidence in the Integrated Status}
+#'   \item{IntStatus.Year}{Year the Integrated Status was last determined}
+#'   \item{IntStatusRaw.Status}{Integrated Status, only for assessment years}
+#'   \item{RapidStatus}{not used, included to allow for automatic processing of metrics file}
 #'   \item{RapidStatus.Status}{Status determined by Rapid Status Assessment}
 #'   \item{RapidStatus.Confidence}{Confidence in the Rapid Status}
-#'   \item{IntStatus.Year}{Year the Integrated Status was last determined}
-#'   \item{IntDtatusRaw}{Integrated Status, only for assessment years}
 #' }
 "Bowron_metrics"
 

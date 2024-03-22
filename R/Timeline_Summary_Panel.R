@@ -28,7 +28,10 @@ require(graphics)
 #' data('RapidStatus', package='SoSplots')
 #' data('Fraser_sockeye_groups', package='SoSplots')
 #' data('sockeye_labels', package='SoSplots')
-#' timeline_summary_plot(data=RapidStatus, group=Fraser_sockeye_groups, labels=sockeye_labels, title='Fraser Sockeye' )
+#' timeline_summary_plot(data=RapidStatus,
+#'                       group=Fraser_sockeye_groups,
+#'                       labels=sockeye_labels,
+#'                       title="Fraser Sockeye" )
 #' @export
 #'
 timeline_summary_plot <- function(data, groups, labels, title = "Status Summary", selectedCUs = NULL, startYr = NULL, endYr = NULL, gpar = NULL, gparSelected = NULL) {
@@ -38,7 +41,7 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
   gparSelected <- add_specs(timelineSummaryPlotSpecsSelected.default(), gparSelected)
 
   # plot setup
-  do.call2(fun = graphics::par, args = list(mar = c(2, 7, 1, 2)), override = gpar$par)
+  do.call2(fun = graphics::par, args = list(mar = c(2, 10, 1, 2)+0.1), override = gpar$par)
   if (is.null(startYr))
     startYr <- min(as.numeric(row.names(data)))
   if (is.null(endYr))
@@ -61,19 +64,26 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 
   # add plot title
   do.call2(fun = graphics::mtext,
-           args = list(text = title, side = 3, line = 2, xpd = NA),
+           args = list(text = parse_label(title), side = 3, line = 2, xpd = NA),
            override = gpar$title)
+
 
   # add the status time series
   ypos <- 1
   for(grp in names(groups)){
-    # leave one line space at the top of each group
-    ypos <- ypos + 1
-    # plot the group label
-    do.call2(fun = graphics::text,
-             args = list(x=graphics::par("usr")[1], y=-ypos, labels=grp, adj=c(0.5), xpd=NA, font=2),
-             override = gpar$group_label)
-    ypos <- ypos + 1
+    # if there is more than one group, show group label on top of group
+    if (length(groups) > 1) {
+      # leave one line space at the top of each group
+      ypos <- ypos + 1
+      # plot the group label
+      do.call2(fun = graphics::text,
+               args = list(x=graphics::par("usr")[1],
+                           y=-ypos,
+                           labels=parse_label(grp),
+                           adj=c(0.5), xpd=NA, font=2),
+               override = gpar$group_label)
+      ypos <- ypos + 1
+    }
 
     for(CU_ID in groups[[grp]]) {
       if (CU_ID %in% names(data)) { # allow for CUs missing from dataset
@@ -83,7 +93,10 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
         # plot the time series label
         if (CU_ID %in% names(labels)) label<-labels[CU_ID] else label <- CU_ID
         do.call2(fun = graphics::text,
-               args = list(x=graphics::par("usr")[1], y=-ypos, labels=label, adj=c(1), xpd=NA, font=1),
+               args = list(x=xlim[1]-1, #graphics::par("usr")[1],
+                           y=-ypos,
+                           labels=parse_label(label),
+                           adj=c(1), xpd=NA, font=1),
                override = override$label)
         # draw the timeline
         ts <- data[, CU_ID]
@@ -115,19 +128,22 @@ timeline_summary_plot <- function(data, groups, labels, title = "Status Summary"
 #' data('RapidStatus', package='SoSplots')
 #' data('Fraser_sockeye_groups', package='SoSplots')
 #' data('sockeye_labels', package='SoSplots')
-#' timeline_summary_plot(data=RapidStatus, group=Fraser_sockeye_groups, labels=sockeye_labels, gpar=list(title=list(text='Fraser Sockeye', col='red', cex=1.2)))
+#' timeline_summary_plot(data=RapidStatus,
+#'                       group=Fraser_sockeye_groups,
+#'                       labels=sockeye_labels,
+#'                       gpar=list(title=list(text='Fraser Sockeye', col='red', cex=1.2)))
 #' @seealso
 #' \code{\link{timeline_summary_plot}}
 #' @export
 timelineSummaryPlotSpecs.default <- function(){
-  list(par = list(mar=c(2, 7, 5, 2)),                 # margins etc
+  list(par = list(mar=c(2, 11, 5, 2) + 0.1),                 # margins etc
        main = list(asp=1),                            # passed to plot
        x.axis = list(cex.axis=1.4),                   # x axis styling
        title = list(font=2, col='darkblue', cex=1.5), # plot title styling
        group_label = list(font=2, cex=1.1, col='darkblue'), # styling for group labels
-       label = list(font=1, cex=1, col='black'),    # styling for CU time series labels
+       label = list(font=1, cex=0.9, col='black'),    # styling for CU time series labels
        metric.text = list(font=1, col='darkblue', cex=1),   # styling for status letter
-       metric.line = list(col='darkgrey'))            # styling for status square
+       metric.line = list(col='darkgrey', xpd=FALSE))            # styling for status square
 }
 
 #' Default plot styling for selected CUs, for use with timeline_summary_plot()
@@ -147,7 +163,7 @@ timelineSummaryPlotSpecs.default <- function(){
 timelineSummaryPlotSpecsSelected.default <- function(){
   list(label = list(font=2, cex=1, col='black'),    # styling for CU time series labels
        metric.text = list(font=2, col='darkblue', cex=1),   # styling for status letter
-       metric.line = list(col='darkgrey'))            # styling for status square
+       metric.line = list(col='darkgrey', xpd=FALSE))            # styling for status square
 }
 
 # -------------- define some default colors -------------------------

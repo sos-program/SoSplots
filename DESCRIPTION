@@ -1,7 +1,7 @@
 Package: SoSplots
 Type: Package
 Title: SoSplots: Custom Plots for the Department of Fisheries and Oceans State of the Salmon Program
-Version: 0.4.0
+Version: 0.5.0
 Author: c(
     person("Brigitte", "Dorner", email ="bdorner@driftwoodcove.ca", role = c("aut", "cre")),
     person("Gottfried", "Pestal", email = "gottfried.pestal@solv.ca", role = c("aut")),
@@ -12,7 +12,7 @@ Description: This package creates custom plots and plot summary panes for metric
     associated with Canadian salmon Conservation Units.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: false
+LazyData: true
 RoxygenNote: 7.3.1
 Depends: 
     R (>= 3.5.0)
@@ -21,4 +21,5 @@ Imports:
     grDevices,
     stats,
     utils
+
     

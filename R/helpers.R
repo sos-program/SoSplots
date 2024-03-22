@@ -121,7 +121,8 @@ draw_square <- function(x, y, status, gpar) {
 
 # draw a row of status squares in a timeline plot
 draw_metric_row <- function(y, m, startYr, endYr, gpar) {
-  do.call2(fun=graphics::abline, args=list(h = y), gpar$metric.line)
+  do.call2(fun=graphics::lines, args=list(x=c(startYr-0.5, endYr+0.5), y=c(y, y)), gpar$metric.line)
+  #do.call2(fun=graphics::abline, args=list(h = y), gpar$metric.line) # note: this sometimes results in the line overlapping with the label
   for (yr in startYr:endYr) {
     myr <- as.character(yr)
     status <- ifelse(myr %in% names(m), as.character(m[myr]), NA)
@@ -135,6 +136,15 @@ get_font <- function(f) {
   if (is.numeric(f)) return(f)
   switch(f, plain = 1, bold = 2, italic = 3, `bold italic` = 4, 1) }
 
+# get a label from a string that might or might not contain a valid expression
+# if the string contains a valid expression, return the parsed expression, otherwise
+# just pass through the string.
+# l: the string to use as a label
+parse_label <- function(l) {
+  label <- try(parse(text=l), silent=T)
+  # if parse fails, just pass through l, otherwise return parsed expression
+  if (inherits(label, "try-error")) l else label
+}
 
 # save extraction of a metric time series from a data frame
 get_ts <- function(m, ds) {
